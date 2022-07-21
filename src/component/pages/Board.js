@@ -15,7 +15,7 @@ const Board=()=>{
 
     const fetchAndSetPosts=async()=>{
         try{
-            const response = await axios.get("/api/posts")
+            const response = await axios.get("/board")
             setPosts(response.data)
         }
         catch(error){
