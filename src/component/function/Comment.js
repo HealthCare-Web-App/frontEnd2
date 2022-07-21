@@ -18,7 +18,7 @@ const Comment=({id})=>{
     }
     const onPost=()=>{
         console.log(content)
-        axios.patch(`http://localhost:4000/posts/${id}`,{
+        axios.patch(`/api/${id}`,{
             comments:[{
                 id:content.commentId,
                 comment:content.comment

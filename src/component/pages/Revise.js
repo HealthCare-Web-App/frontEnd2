@@ -24,7 +24,7 @@ const Revise=()=>{
 
     useEffect(()=>{
         const viewNow=async()=>{
-            const response = await axios.get(`http://localhost:4000/posts/${id}`)
+            const response = await axios.get(`/api/posts/${id}`)
             setContent({
                 body:response.data.body,
                 title:response.data.title,}
@@ -34,7 +34,7 @@ const Revise=()=>{
     },[id])
 
     const reWrite=()=>{
-        axios.patch(`http://localhost:4000/posts/${id}`,{
+        axios.patch(`/api/posts/${id}`,{
             body:content.body.replace(/(<([^>]+)>)/ig,""),
             title:content.title,
             userId:content.userId

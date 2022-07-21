@@ -26,7 +26,7 @@ const Write = ()=>{
 
     const countLen=async()=>{
       try{
-          const response = await axios.get("http://localhost:4000/posts")
+          const response = await axios.get("/api/posts")
           setLen(response.data.length)
       }
       catch(error){
@@ -35,7 +35,7 @@ const Write = ()=>{
     }
 
     const uploadPost=()=>{
-      axios.post("http://localhost:4000/posts",{
+      axios.post("/api/posts",{
         userId :content.userId,
         id:len+1,
         body:content.body.replace(/(<([^>]+)>)/ig,""),

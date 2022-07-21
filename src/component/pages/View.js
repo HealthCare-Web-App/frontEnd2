@@ -16,13 +16,13 @@ const View = ()=>{
         })
     
         const onRemove=(id)=>{
-            axios.delete(`http://localhost:4000/posts/${id}`)
+            axios.delete(`/api/posts/${id}`)
             navigate('/board')
         }
         
     useEffect(()=>{
         const viewNow=async()=>{
-            const response = await axios.get(`http://localhost:4000/posts/${id}`)
+            const response = await axios.get(`/api/posts/${id}`)
             setContent({
                 userId:response.data.userId,
                 body:response.data.body,
@@ -44,7 +44,7 @@ const View = ()=>{
         )
     }
     const reNew=()=>{
-        axios.patch(`http://localhost:4000/posts/${id}`,{
+        axios.patch(`/api/${id}`,{
             body:content.body,
             title:content.title,
             userId:content.userId
