@@ -9,23 +9,23 @@ import styled from "styled-components";
 const View = ()=>{
         let navigate = useNavigate()
         const {id}=useParams()
-        const [content,setContent]=useState({
+        const [contents,setContents]=useState({
             userId:'',
             body:'',
             title:''
         })
     
         const onRemove=(id)=>{
-            axios.delete(`/api/posts/${id}`)
+            axios.delete(`/board/${id}`)
             navigate('/board')
         }
         
     useEffect(()=>{
         const viewNow=async()=>{
-            const response = await axios.get(`/api/posts/${id}`)
-            setContent({
+            const response = await axios.get(`/board/${id}`)
+            setContents({
                 userId:response.data.userId,
-                body:response.data.body,
+                content:response.data.body,
                 title:response.data.title,}
             )
             
@@ -38,16 +38,16 @@ const View = ()=>{
     }
     const onChange = (e)=>{
         const {name,value}=e.target
-        setContent({...content,
+        setContents({...contents,
             [name]:value
         }
         )
     }
     const reNew=()=>{
         axios.patch(`/api/${id}`,{
-            body:content.body,
-            title:content.title,
-            userId:content.userId
+            body:contents.body,
+            title:contents.title,
+            userId:contents.userId
         })
         navigate('/board')
     }
@@ -58,14 +58,14 @@ const View = ()=>{
         <>
         <Layout>
             <Title>
-                <input placeholder="이름" value={content.title} onChange={onChange} name='title'/>
-                <input placeholder="작성자" value={content.userId} onChange={onChange} name='userId'/> 
+                <input placeholder="이름" value={contents.title} onChange={onChange} name='title'/>
+                <input placeholder="작성자" value={contents.userId} onChange={onChange} name='userId'/> 
                 <button onClick={goRevise}>수정하러</button>
                 <button onClick={()=>{onRemove(id)}}>삭제</button>
                 <button onClick={reNew}>여기서수정</button>
             </Title>
             <Body>
-                <textarea cols='50' rows='10' placeholder="내용" value={content.body} onChange={onChange} name='body'></textarea>
+                <textarea cols='50' rows='10' placeholder="내용" value={contents.body} onChange={onChange} name='body'></textarea>
             </Body>
             <Comment id={id}/>
 

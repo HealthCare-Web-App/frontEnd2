@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState} from 'react';
 import {useNavigate } from 'react-router-dom';
 import Layout from '../common/Layout';
 import axios from 'axios';
@@ -8,52 +8,36 @@ import Editor from '../function/Editor';
 
 const Write = ()=>{
     let navigate = useNavigate()
-    const [content,setContent]=useState({
+    const [contents,setContent]=useState({
       userId:null,
-      id:null,
       title:'',
       body:''
     })
-    const [len, setLen] = useState(0);
 
     const getValue=(e)=>{
       const {name,value}=e.target
       setContent({
-        ...content,
+        ...contents,
         [name]:value
       })
     }
 
-    const countLen=async()=>{
-      try{
-          const response = await axios.get("/api/posts")
-          setLen(response.data.length)
-      }
-      catch(error){
-          console.error(error)
-      }
-    }
 
     const uploadPost=()=>{
       axios.post("/api/posts",{
-        userId :content.userId,
-        id:len+1,
-        body:content.body.replace(/(<([^>]+)>)/ig,""),
-        title:content.title
+        userId :contents.userId,
+        content:contents.body.replace(/(<([^>]+)>)/ig,""),
+        title:contents.title
       }
       )
-      setLen(len=>len+=1)
       navigate('/board')
     }
 
-    useEffect(()=>{
-      countLen()
-    }, []);
 
     return(<>
         <Layout>
         <FormWrapper>
-            <Editor getValue={getValue} content={content} setContent={setContent} />
+            <Editor getValue={getValue} contents={contents} setContent={setContent} />
             <button className = "submit-button" onClick={uploadPost}>글쓰기</button>
         </FormWrapper>
         </Layout>

@@ -2,13 +2,13 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import styled from 'styled-components';
 
-const Editor =({getValue,content,setContent})=>{
+const Editor =({getValue,contents,setContent})=>{
     
     return(
         <>
         <InfoWrap>
-            <input className = "title-input" type='text' value={content.title} placeholder='제목' onChange={getValue} name='title'/>
-            <input className='userId-input' type='text' value={content.userId} placeholder='작성자'onChange={getValue} name='userId'/>
+            <input className = "title-input" type='text' value={contents.title} placeholder='제목' onChange={getValue} name='title'/>
+            <input className='userId-input' type='text' value={contents.userId} placeholder='작성자'onChange={getValue} name='userId'/>
         </InfoWrap>
         <CKEditor 
                 editor={ ClassicEditor }
@@ -21,7 +21,7 @@ const Editor =({getValue,content,setContent})=>{
                     const data = editor.getData();
                     console.log({ event, editor, data });
                     setContent({
-                    ...content,
+                    ...contents,
                     body: data
                     })
                 }}

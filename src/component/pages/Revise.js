@@ -9,24 +9,24 @@ import Layout from "../common/Layout";
 const Revise=()=>{
     let navigate = useNavigate()
         const {id}=useParams()
-        const [content,setContent]=useState({
-            body:'',
+        const [contents,setContents]=useState({
+            content:'',
             title:''
         })
     
     const chchange=(e)=>{
         const {name,value}=e.target
-        setContent({
-            ...content,
+        setContents({
+            ...contents,
             [name]:value
         })
     }
 
     useEffect(()=>{
         const viewNow=async()=>{
-            const response = await axios.get(`/api/posts/${id}`)
-            setContent({
-                body:response.data.body,
+            const response = await axios.get(`/board/${id}`)
+            setContents({
+                content:response.data.body,
                 title:response.data.title,}
             )
         }
@@ -35,9 +35,9 @@ const Revise=()=>{
 
     const reWrite=()=>{
         axios.patch(`/api/posts/${id}`,{
-            body:content.body.replace(/(<([^>]+)>)/ig,""),
-            title:content.title,
-            userId:content.userId
+            content:contents.body.replace(/(<([^>]+)>)/ig,""),
+            title:contents.title,
+            userId:contents.userId
         })
         navigate('/board')
     }
@@ -46,7 +46,7 @@ const Revise=()=>{
         <>
         <Layout>
             <FormWrapper>
-                <Editor getValue={chchange} content={content} setContent={setContent} />
+                <Editor getValue={chchange} contents={contents} setContent={setContents} />
                 <button className = "submit-button" onClick={reWrite}>수정</button>
             </FormWrapper>
         </Layout>
