@@ -6,6 +6,10 @@ font-family: 'Noto Sans KR', sans-serif; */
     font-family: 'Noto Sans KR', sans-serif;
 }
 
+/* ???????????????? */
+.lzCgY{
+    height: 200vh !important;
+}
 
 /* react-calendar */
 .react-calendar { 
@@ -137,6 +141,8 @@ section.list{
     border-bottom: 1px solid #dee4f1;
     margin: 0 auto;
     padding: 20px;
+    overflow: hidden;
+    position: relative;
 }
 
 .list-div{
@@ -146,10 +152,15 @@ section.list{
     display: flex;
     justify-content: space-between;
     width: 100%;
+    transition: 0.25s;
+}
+
+.list-div.slide{
+    transform: translateX(-150px);
 }
 
 .list-div input.main-tit{
-    width:100px;
+    width:90px;
     padding:10px;
 }
 
@@ -175,11 +186,54 @@ button.add-list{
     margin: 0 20px 10px;
 }
 
+button.save-list{
+    background-color: #FE6229;
+    color: #fff;
+    border: none;
+    display: block;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 0 1.5px #dee4f1, 0px 5px 13px 0px #dee4f1;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+    width:115px;
+    margin:30px auto 0;
+}
+
 button.add-list > span{
     position: absolute;
     top:50%;
     left:15px;
     transform: translateY(-50%);
+}
+
+.list-btn{
+    height: 100%;
+    width: 150px;
+    position: absolute;
+    top:0;
+    right: -100%;
+    transition: 0.25s;
+}
+
+.list-btn.slide{
+    right:0;
+}
+
+.list-btn button{
+    height: 100%;
+    width: 50%;
+    border: none;
+    color:#fff
+}
+
+.list-btn .edit-btn{
+    background-color: #6F7680;
+}
+
+.list-btn .del-btn{
+    background-color: #FE6229;
 }
 
 /* count */
@@ -199,4 +253,8 @@ button.add-list > span{
     border: none;
     display: flex;
     align-items: center;
+}
+
+.count-wrap button:last-child{
+    margin-bottom:5px;
 }

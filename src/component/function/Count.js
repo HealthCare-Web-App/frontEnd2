@@ -26,6 +26,18 @@ class Count extends Component {
         }
     }
 
+    Edit = (e) => {
+        const parent = e.target.closest('.list-div');
+
+        if (parent.classList.contains('slide')) {
+            parent.classList.remove('slide');
+            parent.nextElementSibling.classList.remove('slide');
+        } else {
+            parent.classList.add('slide');
+            parent.nextElementSibling.classList.add('slide');
+        }
+    }
+
     handleChange = (e) => {
         this.setState({
             counter : Number(e.target.value)
@@ -35,16 +47,19 @@ class Count extends Component {
     render() {
         return (
             <div className="count-wrap">
-                <button type="button" onClick={this.Increase}>
-                    <span className="material-symbols-outlined">add_circle</span>
+                <button type="button" onClick={this.Decrease}>
+                    <span className="material-symbols-outlined">do_not_disturb_on</span>
                 </button>
                 <input 
                     placeholder="0"
                     className="ex-count"
                     value={this.state.counter}
                     onChange={this.handleChange}/>
-                <button type="button" onClick={this.Decrease}>
-                    <span className="material-symbols-outlined">do_not_disturb_on</span>
+                <button type="button" onClick={this.Increase}>
+                    <span className="material-symbols-outlined">add_circle</span>
+                </button>
+                <button type="button" onClick={this.Edit}>
+                    <span className="material-symbols-outlined">edit_square</span>
                 </button>
             </div>
         )

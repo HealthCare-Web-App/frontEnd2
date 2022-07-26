@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 
-const LayoutStyle=styled.div`
+const LayoutStyle = styled.div`
     position:relative;
     width: 428px;
     height: 100vh;
@@ -18,6 +18,7 @@ const LayoutStyle=styled.div`
         padding:20px;
         text-align:center;
     }
+
     .btm-menu{
         position: fixed;
         bottom:0;
@@ -31,27 +32,27 @@ const LayoutStyle=styled.div`
         justify-content: space-between;
     }
 
-.btm-menu > div::before{
-    content: '';
-    display: inline-block;
-    width:42px;
-    height: 42px;
-    border: 1px solid #000;
-}
+    .btm-menu > div::before{
+        content: '';
+        display: inline-block;
+        width:42px;
+        height: 42px;
+        border: 1px solid #000;
+    }
 
-.btm-menu > div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 33.333%;
-    height: 80px;
-    border-right: 1px solid #fff;
-}
+    .btm-menu > div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 33.333%;
+        height: 80px;
+        border-right: 1px solid #fff;
+    }
 
-.btm-menu > div:last-child{
-    border-right: none;
-}
+    .btm-menu > div:last-child{
+        border-right: none;
+    }
 `
 
 const Layout = ({children})=>{
