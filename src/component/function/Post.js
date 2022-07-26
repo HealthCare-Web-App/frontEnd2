@@ -24,7 +24,7 @@ function Posts({posts,limit,page,setPage,offset}) {
         <tbody>
         {posts.slice(offset,offset+limit).map(({id,title,userId})=>(
         <tr key={id}>
-          <td>{id}</td>
+          <td>{userId}</td>
           <td  onClick={()=>goRouteId(id)}>{title}</td>
           <td>{userId}</td>
           <td>아직</td>
