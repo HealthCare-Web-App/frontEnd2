@@ -3,7 +3,7 @@ import { useState } from "react"
 import styled from "styled-components"
 
 const Comment=({id})=>{
-    const [content,setContent]=useState({
+    const [contents,setContent]=useState({
         commentId:'',
         comment:''
     })
@@ -12,29 +12,39 @@ const Comment=({id})=>{
     const onChange =(e)=>{
         const {name,value}=e.target
         setContent({
-            ...content,
+            ...contents,
             [name]:value
         })
     }
     const onPost=()=>{
-        console.log(content)
-        axios.patch(`/api/${id}`,{
-            comments:[{
-                id:content.commentId,
-                comment:content.comment
-            }
-            ]
-        
+        axios.post(`/board/${id}`,{
+            commentId:[{
+                userId:contents.commentId,
+                content:contents.comment
+            }]
         })
     }
     return(
         <>
             <CommentWrap>
-                <div className="abc">
-                    <input placeholder="작성자" name="commentId" onChange={onChange}/>
-                    <textarea placeholder="댓글입력" name="comment" onChange={onChange}/>
+                <div className="PostComment">
+                    <div className="abc">
+                        <input placeholder="작성자" name="userId" onChange={onChange}/>
+                        <textarea placeholder="댓글입력" name="comment" onChange={onChange}/>
+                    </div>
+                    <button onClick={onPost}>등록하기</button>
                 </div>
-                <button onClick={onPost}>등록하기</button>
+
+                <div className='commentUl'>
+                    <div className="commentLi">
+                        <div>작성자</div>
+                        <div>댓글내용</div>
+                    </div>
+                    <div className="commentLi">
+                        <div>작성자</div>
+                        <div>댓글내용</div>
+                    </div>
+                </div>
             </CommentWrap>
 
         </>
@@ -43,9 +53,11 @@ const Comment=({id})=>{
 
 const CommentWrap=styled.div`
 position:absolute;
-display:flex;
 width:100%;
 margin-top: 5px;
+.PostComment{
+    display:flex;
+}
 .abc{
     display:flex;
     width:80%;
@@ -56,6 +68,9 @@ margin-top: 5px;
 }
 button{
     width:20%;
+}
+.commnetLi{
+    border:1px solid black;
 }
 `
 
