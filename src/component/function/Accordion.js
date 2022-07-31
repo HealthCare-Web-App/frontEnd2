@@ -2,22 +2,19 @@ import React from 'react';
 import Count from './Count';
 
 const Del = (e) => {
-    const parent = e.target.closest('.list-btn');
-    parent.parentElement.remove();
+    const parent = e.target.closest('.list-wrapper');
+    // parent.parentElement.remove();
 
+    const id = "";
 
-    //삭제
-    // async function postData() {
-    //     try {
-    //     const response = await axios.post('url주소',{
-    //         username: "devstone",
-    //         password: "12345"
-    //     });
-    //         console.log(response);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
+    console.log(parent)
+    // axios.delete(` ${id}`)
+    // .then((res) => {
+    //     alert('삭제되었습니다.');
+    // })
+    // .catch(function(error){
+    //     console.log('실패');
+    // })
 }
 
 const Edit = (e) => {
@@ -53,7 +50,7 @@ function List(props) {
         <div>
             <Searchbar onSearchChange={handleSearchChange}/> 
             <section className='list'>
-                {searchResults.map(item => <Question key={item.id} tit={item.tit} subTit={item.subTit} count={item.count} />)}
+                {searchResults.map(item => <Question key={item.exerciseLogId} tit={item.exerciseLogId} subTit={item.detailLog} count={item.number} />)}
             </section>   
         </div>
     )
@@ -73,13 +70,14 @@ const Searchbar = props => {
 const Question = props => {
     return(
         <div className="list-wrapper">
+            <input type="hidden" value={props.tit}></input>
             <div className='list-div'>
                 <input type="text" 
                     className="main-tit"
-                    defaultValue={props.tit} readOnly/>
+                    defaultValue={props.tit} readOnly={props.tit != null ? false : true}/>
                 <input type="text" 
                     className="sub-tit"
-                    defaultValue={props.subTit} readOnly/>
+                    defaultValue={props.subTit} readOnly={props.subTit != null ? false : true}/>
 
                 <Count count={props.count}/>
             </div>

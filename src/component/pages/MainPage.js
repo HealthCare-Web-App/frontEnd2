@@ -8,45 +8,39 @@ import StopWatch from '../function/StopWatch.js';
 import List from '../function/Accordion';
 import Layout from '../common/Layout';
 
+export const todayDate = () => {
+    let now = new Date();
+    let todayYear = now.getFullYear();
+    let todayMonth = now.getMonth() + 1 > 9 ? (now.getMonth() + 1) : '0' + (now.getMonth() + 1);
+    let todayDate = now.getDate() > 9 ? now.getDate() : '0' + now.getDate();
+
+    return todayYear + todayMonth + todayDate;
+}
+
 const MainPage=()=>{
-    
-    
-    const [questions , setQuestions] = useState([
-        {
-            id: 1,
-            tit: '운동1',
-            subTit:'100kg',
-            count: '15'
-        },
-        {
-            id: 2,
-            tit: '운동2',
-            subTit:'15m',
-            count: '200'
-        },
-        {
-            id: 3,
-            tit: '운동3',
-            subTit:'1kg',
-            count: '100'
-        },
-        {
-            id: 4,
-            tit: '운동4',
-            subTit:'50kg',
-            count: '5'
-        }
-    ]);
+    const [questions , setQuestions] = useState([]);
+
+    useEffect(()=>{
+        const url = "https://jsonplaceholder.typicode.com/photos";
+
+        axios.get(url , {date : todayDate()})
+        .then((res) => {
+            //setQuestions(res.data);
+        })
+        .catch(function(error){
+            console.log('실패');
+        })
+    }, []);
 
     const [date, setDate] = useState();
-    const nextId = useRef(5);
+    const nextId = useRef(questions.length);
 
     const onCreate = () => {
         const question = {
-            id: nextId.current,
-            tit: '',
-            subTit:'',
-            count: '0'
+            exerciseLogIn : nextId.current,
+            content: '',
+            detailLog:'',
+            number: '0'
         }
 
         setQuestions([...questions , question]);
@@ -61,10 +55,10 @@ const MainPage=()=>{
         list.forEach((item) => {
             var obj = new Object();
 
-            obj.id = i;
-            obj.tit = item.querySelector('.main-tit').value;
-            obj.subTit = item.querySelector('.sub-tit').value;
-            obj.count = item.querySelector('.ex-count').value;
+            obj.exerciseLogIn = i;
+            obj.content   = item.querySelector('.main-tit').value;
+            obj.detailLog = item.querySelector('.sub-tit').value;
+            obj.number    = item.querySelector('.ex-count').value;
 
             listArr.push(obj);
 
@@ -75,13 +69,16 @@ const MainPage=()=>{
     }
 
     const saveList = () => {
+        const time = document.querySelectorAll('.digits')[0].innerText
+                    + document.querySelectorAll('.digits')[1].innerText;
+        
         const param = {
             "date" :  document.getElementById('date').value,
-            "time" :  date, 
+            "time" :  time, 
             "list" :  getValue()
         }
 
-        console.log(param);
+        console.log(param)
     }
 
     return(
@@ -95,7 +92,7 @@ const MainPage=()=>{
                         formatDay={(locale, date) => date.toLocaleString("en", {day: "numeric"})}/>
 
                     <div className="today-wrap">
-                        <input type="hidden" id="date" value={moment(date).format("YYYY년 MM월 DD일")} ></input>
+                        <input type="hidden" id="date" value={moment(date).format("YYYYMMDD")} ></input>
                         <StopWatch />
                     </div>
                 </div>
