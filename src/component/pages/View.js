@@ -11,8 +11,8 @@ const View = ()=>{
         const {id}=useParams()
         const [contents,setContents]=useState({
             userId:'',
-            body:'',
-            title:''
+            content:'',
+            title:'',
         })
     
         const onRemove=(id)=>{
@@ -25,7 +25,7 @@ const View = ()=>{
             const response = await axios.get(`/board/${id}`)
             setContents({
                 userId:response.data.userId,
-                content:response.data.body,
+                content:response.data.content,
                 title:response.data.title,}
             )
             
@@ -33,9 +33,7 @@ const View = ()=>{
         viewNow()
     },[id])
 
-    const goRevise=()=>{
-        navigate(`/board/${id}/revise`)
-    }
+    
     const onChange = (e)=>{
         const {name,value}=e.target
         setContents({...contents,
@@ -44,8 +42,8 @@ const View = ()=>{
         )
     }
     const reNew=()=>{
-        axios.patch(`/api/${id}`,{
-            body:contents.body,
+        axios.patch(`/board/${id}`,{
+            content:contents.content,
             title:contents.title,
             userId:contents.userId
         })
@@ -60,12 +58,11 @@ const View = ()=>{
             <Title>
                 <input placeholder="이름" value={contents.title} onChange={onChange} name='title'/>
                 <input placeholder="작성자" value={contents.userId} onChange={onChange} name='userId'/> 
-                <button onClick={goRevise}>수정하러</button>
                 <button onClick={()=>{onRemove(id)}}>삭제</button>
                 <button onClick={reNew}>여기서수정</button>
             </Title>
             <Body>
-                <textarea cols='50' rows='10' placeholder="내용" value={contents.body} onChange={onChange} name='body'></textarea>
+                <textarea cols='50' rows='10' placeholder="내용" value={contents.content} onChange={onChange} name='body'></textarea>
             </Body>
             <Comment id={id}/>
 

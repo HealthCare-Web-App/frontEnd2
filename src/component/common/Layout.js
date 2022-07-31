@@ -66,7 +66,7 @@ const Layout = ({children})=>{
             <div className="btm-menu">
                 <div className="go-write"><Link to="/board">게시판</Link></div>
                 <div className="go-main"><Link to="/">메인</Link></div>
-                <div className="go-user"><Link to="/">내 정보</Link></div>
+                <div className="go-user"><Link to="/login">내 정보</Link></div>
             </div>
         </LayoutStyle>
         </>

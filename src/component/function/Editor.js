@@ -8,7 +8,7 @@ const Editor =({getValue,contents,setContent})=>{
         <>
         <InfoWrap>
             <input className = "title-input" type='text' value={contents.title} placeholder='제목' onChange={getValue} name='title'/>
-            <input className='userId-input' type='text' value={contents.userId} placeholder='작성자'onChange={getValue} name='userId'/>
+            <input className='userId-input' type='text' value={contents.userId} placeholder='작성자'onChange={getValue} name='userNickname'/>
         </InfoWrap>
         <CKEditor 
                 editor={ ClassicEditor }

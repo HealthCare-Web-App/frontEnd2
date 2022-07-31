@@ -22,11 +22,11 @@ function Posts({posts,limit,page,setPage,offset}) {
         <th>작성일</th>
         </thead>
         <tbody>
-        {posts.slice(offset,offset+limit).map(({id,title,userId})=>(
+        {posts.slice(offset,offset+limit).map(({id,title,userId,userNickname})=>(
         <tr key={id}>
           <td>{userId}</td>
           <td  onClick={()=>goRouteId(id)}>{title}</td>
-          <td>{userId}</td>
+          <td>{userNickname}</td>
           <td>아직</td>
         </tr>
         ))}

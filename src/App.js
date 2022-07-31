@@ -6,7 +6,9 @@ import MainPage from './component/pages/MainPage';
 import Board from './component/pages/Board';
 import Write from './component/pages/Write';
 import View from './component/pages/View';
+import Login from './component/pages/Login';
 import Revise from './component/pages/Revise';
+import  SignUp from './component/pages/SignUp';
 import './index.css';
 
 
@@ -27,6 +29,8 @@ function App() {
         <Route path="/board/:id" element={<View/>}></Route>
         <Route path="/board/:id/revise" element={<Revise/>}></Route>
         <Route path="/write" element={<Write/>}></Route>
+        <Route path="/login" element={<Login/>}></Route>
+        <Route path="/SignUp" element={<SignUp/>}></Route>
       </Routes>
       
     </>

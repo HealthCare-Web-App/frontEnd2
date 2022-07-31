@@ -1,12 +1,16 @@
+import React,{ useEffect,useState,useCallback} from "react";
 import axios from "axios"
-import { useState } from "react"
 import styled from "styled-components"
 
 const Comment=({id})=>{
     const [contents,setContent]=useState({
         commentId:'',
-        comment:''
+        content:'',
+        userNickname:'',
     })
+    
+
+    const [cmList,setCmList]=useState([])
 
 
     const onChange =(e)=>{
@@ -17,33 +21,51 @@ const Comment=({id})=>{
         })
     }
     const onPost=()=>{
-        axios.post(`/board/${id}`,{
-            commentId:[{
-                userId:contents.commentId,
-                content:contents.comment
-            }]
+     //   console.log(`/board/${id}`);
+    }
+
+    const loadComments= useCallback( async()=>{
+        const response = await axios.get(`/board/${id}`)
+        const commentDtoList = response.data.commentDtoList
+        console.log(commentDtoList)
+        setCmList([commentDtoList,...cmList])
+    },[cmList,id])
+
+    useEffect(()=>{
+        loadComments()
+    },[loadComments])
+
+    const aaa = (x)=>{
+        axios.delete(`/board/${id}/${x}`)
+        loadComments()
+    }
+    
+    const bbb = (x)=>{
+        axios.patch(`/board/${id}/${x}`,{
+            content:'수정댓글'
         })
     }
+
     return(
         <>
             <CommentWrap>
                 <div className="PostComment">
                     <div className="abc">
-                        <input placeholder="작성자" name="userId" onChange={onChange}/>
-                        <textarea placeholder="댓글입력" name="comment" onChange={onChange}/>
+                        <input placeholder="작성자" name="userNickname" onChange={onChange}/>
+                        <textarea placeholder="댓글입력" name="content" onChange={onChange}/>
                     </div>
                     <button onClick={onPost}>등록하기</button>
                 </div>
 
                 <div className='commentUl'>
-                    <div className="commentLi">
-                        <div>작성자</div>
-                        <div>댓글내용</div>
-                    </div>
-                    <div className="commentLi">
-                        <div>작성자</div>
-                        <div>댓글내용</div>
-                    </div>
+                    {cmList.map(({id,commentId,content})=>(
+                        <div key={id} className="commentLi">
+                            <div>{commentId}</div>
+                            <div>{content}</div>
+                            <button onClick={()=>aaa(id)}>삭제</button>
+                            <button onClick={()=>bbb(id)}>수정</button>
+                        </div>
+                    ))}
                 </div>
             </CommentWrap>
 
