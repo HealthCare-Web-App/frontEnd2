@@ -10,6 +10,7 @@ const Write = ()=>{
     let navigate = useNavigate()
     const [contents,setContent]=useState({
       userId:null,
+      userNickname:'',
       title:'',
       body:''
     })
@@ -24,8 +25,9 @@ const Write = ()=>{
 
 
     const uploadPost=()=>{
-      axios.post("/api/posts",{
+      axios.post("/board",{
         userId :contents.userId,
+        userNickname:contents.userNickname,
         content:contents.body.replace(/(<([^>]+)>)/ig,""),
         title:contents.title
       }
