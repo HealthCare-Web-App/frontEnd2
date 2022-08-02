@@ -11,8 +11,6 @@ import Revise from './component/pages/Revise';
 import  SignUp from './component/pages/SignUp';
 import './index.css';
 
-
-
 const GlobalStyles = createGlobalStyle`
     ${reset};
 `;

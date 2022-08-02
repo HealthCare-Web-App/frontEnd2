@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from "styled-components";
 
 class Count extends Component {
     constructor(props) {
@@ -46,24 +47,51 @@ class Count extends Component {
 
     render() {
         return (
-            <div className="count-wrap">
-                <button type="button" onClick={this.Decrease}>
-                    <span className="material-symbols-outlined">do_not_disturb_on</span>
-                </button>
-                <input 
-                    placeholder="0"
-                    className="ex-count"
-                    value={this.state.counter}
-                    onChange={this.handleChange}/>
-                <button type="button" onClick={this.Increase}>
-                    <span className="material-symbols-outlined">add_circle</span>
-                </button>
-                <button type="button" onClick={this.Edit}>
-                    <span className="material-symbols-outlined">edit_square</span>
-                </button>
-            </div>
+            <Data>
+                <div className="count-wrap">
+                    <button type="button" onClick={this.Decrease}>
+                        <span className="material-symbols-outlined">do_not_disturb_on</span>
+                    </button>
+                    <input 
+                        placeholder="0"
+                        className="ex-count"
+                        value={this.state.counter}
+                        onChange={this.handleChange}/>
+                    <button type="button" onClick={this.Increase}>
+                        <span className="material-symbols-outlined">add_circle</span>
+                    </button>
+                    <button type="button" onClick={this.Edit}>
+                        <span className="material-symbols-outlined">edit_square</span>
+                    </button>
+                </div>
+            </Data>
         )
     }
 }
+
+const Data=styled.div`
+    .count-wrap{
+        display: flex;
+        gap:5px;
+    }
+
+    .count-wrap input{
+        width:50px;
+        text-align: center;
+        padding:10px;
+        margin:0;
+    }
+
+    .count-wrap button{
+        background: none;
+        border: none;
+        display: flex;
+        align-items: center;
+    }
+
+    .count-wrap button:last-child{
+        margin-bottom:5px;
+    }
+`
 
 export default Count;
