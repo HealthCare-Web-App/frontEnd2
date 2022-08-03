@@ -7,28 +7,48 @@ const Del = (e) => {
     const parent = e.target.closest('.list-btn');
 
     //삭제
-    const url = "https://jsonplaceholder.typicode.com/photos";
-    
-    console.log(parent.parentElement.id);
-
-    axios.delete(url , {id : parent.parentElement.id})
+    axios.delete(`/canlendar/${parent.parentElement.id}`)
     .then((res) => {
         alert('삭제되었습니다.');
         parent.parentElement.remove();
-    })
-    .catch(function(error){
-        console.log('실패');
     })
 }
 
 const Edit = (e) => {
     const parent = e.target.closest('.list-btn');
+    e.target.innerText = '완료';
 
     parent.parentElement.querySelectorAll('input')
-        .forEach((ele) => ele.readOnly = false);
+        .forEach(function(ele){
+            ele.readOnly = false;
+            ele.style.border='1px solid red';
+        });
     
     parent.classList.remove('slide');
     parent.previousElementSibling.classList.remove('slide');
+
+    e.target.onclick = (e) => EditConfirm(e);
+}
+
+const EditConfirm = (e) => {
+    const parent = e.target.closest('.list-btn');
+    e.target.innerText = '수정';
+
+    parent.parentElement.querySelectorAll('input')
+        .forEach(function(ele){
+            ele.readOnly = true;
+            ele.style.border='1px solid blue';
+        });
+
+    //수정
+    axios.patch(`/canlendar/${parent.parentElement.id}`)
+    .then((res) => {
+        alert('수정되었습니다.');
+        parent.classList.remove('slide');
+        parent.previousElementSibling.classList.remove('slide');
+
+        e.target.onclick = (e) => Edit(e);
+    })
 }
 
 function List(props) {    

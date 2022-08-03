@@ -14,44 +14,15 @@ export const dateFormat = (date) => {
 }
 
 const MainPage=()=>{
-    const [questions , setQuestions] = useState([
-        // {
-        //     exerciseLogIn: 1,
-        //     content: '운동1',
-        //     detailLog:'100kg',
-        //     number: '15'
-        // },
-        // {
-        //     exerciseLogIn: 2,
-        //     content: '운동2',
-        //     detailLog:'15m',
-        //     number: '200'
-        // },
-        // {
-        //     exerciseLogIn: 3,
-        //     content: '운동3',
-        //     detailLog:'1kg',
-        //     number: '100'
-        // },
-        // {
-        //     exerciseLogIn: 4,
-        //     content: '운동4',
-        //     detailLog:'50kg',
-        //     number: '5'
-        // }
-    ]);
+    const [questions , setQuestions] = useState([]);
 
     const [date, setDate] = useState();
-
+    const id = '1'; //아이디 값 현재 임의로 둠.
+    
     useEffect(()=>{
-        const url = "https://jsonplaceholder.typicode.com/photos";
-        console.log(dateFormat(date))
-        axios.get(url , {date : dateFormat(date)})
+        axios.get(`/calendar/${dateFormat(date)}/${id}`)
         .then((res) => {
-            //setQuestions(res.data);
-        })
-        .catch(function(error){
-            console.log('실패');
+            setQuestions(res.data);
         })
     }, [date]);
 
@@ -92,12 +63,16 @@ const MainPage=()=>{
                     + document.querySelectorAll('.digits')[1].innerText;
         
         const param = {
+            "userId" : id,
             "date" :  document.getElementById('date').value,
             "time" :  time, 
             "list" :  getValue()
         }
 
-        console.log(param)
+        axios.get(`/calendar/${dateFormat(date)}` , param)
+        .then((res) => {
+            setQuestions(res.data);
+        })
     }
 
     return(
