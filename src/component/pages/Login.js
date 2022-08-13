@@ -27,11 +27,14 @@ const Login = ()=>{
             window.alert('아이디와 비밀번호를 입력해주세요')
         }
         axios.post('/login',{
-            id:contents.userId,
+            loginId:contents.userId,
             pw:contents.userPassword,
         }).then((res)=>{
-            console.log(res.data.token)
-            setCookie('id',res.data.token)
+            console.log(res.data)
+            setCookie('id',res.data)
+        })
+        .catch((e)=>{
+            console.error(e)
         })
     }
 
@@ -39,7 +42,7 @@ const Login = ()=>{
         <>
         <Layout>
             <Log>
-                {cookies.id==='undefined'?
+                {cookies.id!=='undefined'?
                 <>
                     <p>LogIn</p>
                     <input placeholder="아이디를 입력해주세요." onChange={onChange} name='userId'/>
