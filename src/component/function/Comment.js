@@ -1,14 +1,12 @@
-import React,{ useEffect,useState,useCallback} from "react";
+import React,{ useState} from "react";
 import axios from "axios"
 import styled from "styled-components"
 
-const Comment=({id})=>{
+const Comment=({y})=>{
     const [contents,setContent]=useState({
-        commentId:'',
         content:'',
         userNickname:'',
     })
-    
 
     const [cmList,setCmList]=useState([])
 
@@ -24,24 +22,21 @@ const Comment=({id})=>{
      //   console.log(`/board/${id}`);
     }
 
-    const loadComments= useCallback( async()=>{
-        const response = await axios.get(`/board/${id}`)
-        const commentDtoList = response.data.commentDtoList
-        console.log(commentDtoList)
-        setCmList([commentDtoList,...cmList])
-    },[cmList,id])
+    const loadComments= async()=>{
+        const response = await axios.get(`/board/${y}`)
+        const commentDtoList = response.data.commentDtosList
+        setCmList(commentDtoList)
+        console.log(cmList)
+    }
 
-    useEffect(()=>{
-        loadComments()
-    },[loadComments])
 
     const aaa = (x)=>{
-        axios.delete(`/board/${id}/${x}`)
+        axios.delete(`/board/${y}/${x}`)
         loadComments()
     }
     
     const bbb = (x)=>{
-        axios.patch(`/board/${id}/${x}`,{
+        axios.patch(`/board/${y}/${x}`,{
             content:'수정댓글'
         })
     }
@@ -56,16 +51,32 @@ const Comment=({id})=>{
                     </div>
                     <button onClick={onPost}>등록하기</button>
                 </div>
-
+                <button onClick={loadComments}>댓글보기</button>
                 <div className='commentUl'>
-                    {cmList.map(({id,commentId,content})=>(
+                    {cmList.map(({id,userNickname,content})=>(
                         <div key={id} className="commentLi">
-                            <div>{commentId}</div>
-                            <div>{content}</div>
+                            <div className="commentContents">
+                                <div>{userNickname}</div>
+                                <div>{content}</div>
+                            </div>
                             <button onClick={()=>aaa(id)}>삭제</button>
                             <button onClick={()=>bbb(id)}>수정</button>
                         </div>
                     ))}
+                    <div className="commentLi">
+                        <div>ss</div>
+                        <div>rsaf</div>
+                        <button onClick={()=>aaa()}>삭제</button>
+                        <button onClick={()=>bbb()}>수정</button>
+                    </div>
+                    <div className="commentLi">
+                        <div className="commentContents">
+                            <div>ss</div>
+                            <div>r</div>
+                        </div>
+                        <button onClick={()=>aaa()}>삭제</button>
+                        <button onClick={()=>bbb()}>수정</button>
+                    </div>
                 </div>
             </CommentWrap>
 
@@ -91,8 +102,14 @@ margin-top: 5px;
 button{
     width:20%;
 }
-.commnetLi{
-    border:1px solid black;
+.commentLi{
+    display:flex;
+    button{
+
+        background-color:black;
+        color: #fff;
+        border:none;
+    }
 }
 `
 

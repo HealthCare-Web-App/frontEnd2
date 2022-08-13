@@ -49,13 +49,13 @@ const Button = styled.button`
   font-size: 1rem;
 
   &:hover {
-    background: #dfbd85;
+    background: #dee4f1;
     cursor: pointer;
     transform: translateY(-2px);
   }
 
   &[disabled] {
-    background: grey;
+    background: #dee4f1;
     cursor: revert;
     transform: revert;
   }

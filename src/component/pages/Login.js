@@ -1,6 +1,7 @@
 import axios from "axios"
 import React,{useState} from "react";
 import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 import Layout from '../common/Layout';
 import styled from "styled-components";
@@ -12,6 +13,8 @@ const Login = ()=>{
         userPassword:'',
     })
 
+    const [cookies,setCookie]=useCookies(['id'])
+
     const onChange = (e)=>{
         const {name,value}=e.target
         setContents({...contents,
@@ -20,19 +23,33 @@ const Login = ()=>{
     )}
 
     const goLogin=()=>{
-        axios.post(`/`)
+        if(contents.userId===''||contents.userPassword===''){
+            window.alert('아이디와 비밀번호를 입력해주세요')
+        }
+        axios.post('/login',{
+            id:contents.userId,
+            pw:contents.userPassword,
+        }).then((res)=>{
+            console.log(res.data.token)
+            setCookie('id',res.data.token)
+        })
     }
 
     return(
         <>
         <Layout>
             <Log>
-                <p>LogIn</p>
-                <input placeholder="아이디를 입력해주세요." onChange={onChange} name='userId'/>
-                <input placeholder="비밀번호를 입력해주세요." onChange={onChange} name='userPassword'/> 
-
-                <Link to='/SignUp'>회원가입</Link>   
-                <button onClick={goLogin}>로그인</button>
+                {cookies.id==='undefined'?
+                <>
+                    <p>LogIn</p>
+                    <input placeholder="아이디를 입력해주세요." onChange={onChange} name='userId'/>
+                    <input placeholder="비밀번호를 입력해주세요." onChange={onChange} name='userPassword'/> 
+                    <Link to='/SignUp'>회원가입</Link>   
+                    <button onClick={goLogin}>로그인</button>
+                </>
+                :<>
+                    {cookies.id}
+                </>}
             </Log>
         </Layout>
         </>
