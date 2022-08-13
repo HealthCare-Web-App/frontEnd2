@@ -2,9 +2,9 @@ import React,{ useEffect,useState} from "react";
 import { useParams } from "react-router";
 import {useNavigate } from 'react-router-dom';
 import Layout from '../common/Layout';
-import Comment from "../function/Comment";
 import axios from "axios";
 import styled from "styled-components";
+import Comment from "../function/Comment";
 
 const View = ()=>{
         let navigate = useNavigate()
@@ -13,6 +13,7 @@ const View = ()=>{
             userId:'',
             content:'',
             title:'',
+            userNickname:'',
         })
     
         const onRemove=(id)=>{
@@ -25,8 +26,11 @@ const View = ()=>{
             const response = await axios.get(`/board/${id}`)
             setContents({
                 userId:response.data.userId,
+                userNickname:response.data.userNickname,
                 content:response.data.content,
-                title:response.data.title,}
+                title:response.data.title,
+                
+            }
             )
             
         }
@@ -43,9 +47,9 @@ const View = ()=>{
     }
     const reNew=()=>{
         axios.patch(`/board/${id}`,{
+            userId:contents.userId,
             content:contents.content,
-            title:contents.title,
-            userId:contents.userId
+            title:contents.title
         })
         navigate('/board')
     }
@@ -57,15 +61,14 @@ const View = ()=>{
         <Layout>
             <Title>
                 <input placeholder="이름" value={contents.title} onChange={onChange} name='title'/>
-                <input placeholder="작성자" value={contents.userId} onChange={onChange} name='userId'/> 
+                <input placeholder="작성자" value={contents.userNickname} onChange={onChange} name='userNickname'/> 
                 <button onClick={()=>{onRemove(id)}}>삭제</button>
                 <button onClick={reNew}>여기서수정</button>
             </Title>
             <Body>
-                <textarea cols='50' rows='10' placeholder="내용" value={contents.content} onChange={onChange} name='body'></textarea>
+                <textarea cols='50' rows='10' placeholder="내용" value={contents.content} onChange={onChange} name='content'></textarea>
             </Body>
-            <Comment id={id}/>
-
+            <Comment y={id}/>
         </Layout>
         </>
     )
