@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const LayoutStyle = styled.div`
     position:relative;
@@ -89,6 +90,35 @@ const LayoutStyle = styled.div`
 `
 
 const Layout = ({children})=>{
+
+    const [cookies,removeCookie]=useCookies('id')
+    const navigate=useNavigate()
+    const logOut=()=>{
+        removeCookie('id')
+        console.log(cookies.undefined)
+        navigate('/login')
+    }
+
+    const isLoginView=()=>{
+        if (cookies.id === undefined|| typeof(cookies.id)==='string'){
+            return(
+                <>
+                    <>{cookies.id}<button onClick={logOut}>LogOut</button></>
+                </>
+            )
+        }
+        if (cookies.id ==='undefined'){
+            return(
+                <>
+                <Link to="/login">
+                    <span className="material-symbols-outlined">account_circle</span>
+                    내 정보
+                </Link>
+                </>
+            )
+        }
+    }
+    
     return(
         <>
         <LayoutStyle>
@@ -110,10 +140,7 @@ const Layout = ({children})=>{
                     </Link>
                 </div>
                 <div className="go-user">
-                    <Link to="/login">
-                        <span className="material-symbols-outlined">account_circle</span>
-                        내 정보
-                    </Link>
+                    {isLoginView()}
                 </div>
             </div>
         </LayoutStyle>

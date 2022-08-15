@@ -1,16 +1,16 @@
 import React,{useState} from 'react';
-import {useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 import Layout from '../common/Layout';
 import axios from 'axios';
 import styled from 'styled-components'
 import Editor from '../function/Editor';
 
-
 const Write = ()=>{
+    
     let navigate = useNavigate()
+    const [cookies]=useCookies()
     const [contents,setContent]=useState({
-      userId:null,
-      userNickname:'',
       title:'',
       body:''
     })
@@ -26,8 +26,7 @@ const Write = ()=>{
 
     const uploadPost=()=>{
       axios.post("/board",{
-        userId :contents.userId,
-        userNickname:contents.userNickname,
+        userId:cookies.id,
         content:contents.body.replace(/(<([^>]+)>)/ig,""),
         title:contents.title
       }
