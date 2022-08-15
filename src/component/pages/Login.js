@@ -1,6 +1,6 @@
 import axios from "axios"
 import React,{useState} from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 import Layout from '../common/Layout';
@@ -8,6 +8,7 @@ import styled from "styled-components";
 
 const Login = ()=>{
 
+    const navigate = useNavigate()
     const [contents,setContents]=useState({
         userId:'',
         userPassword:'',
@@ -31,32 +32,46 @@ const Login = ()=>{
             pw:contents.userPassword,
         }).then((res)=>{
             console.log(res.data)
-            setCookie('id',res.data)
+            setCookie('id',res.data.userId)
+            navigate('/')
         })
         .catch((e)=>{
             console.error(e)
+            alert('아이디와 비밀번호가일치하지않습니다.')
         })
     }
 
-    return(
-        <>
-        <Layout>
+    if (cookies.id === undefined){
+        return(
+            <>
+            <Layout>
             <Log>
-                {cookies.id!=='undefined'?
-                <>
-                    <p>LogIn</p>
+                
+                로그인해주세요
+            </Log>
+            </Layout>
+            </>
+        )
+    }
+    if (cookies.id ==='undefined'){
+        return(
+            <>
+            <Layout>
+                <Log>
+                <p>LogIn</p>
                     <input placeholder="아이디를 입력해주세요." onChange={onChange} name='userId'/>
                     <input placeholder="비밀번호를 입력해주세요." onChange={onChange} name='userPassword'/> 
                     <Link to='/SignUp'>회원가입</Link>   
                     <button onClick={goLogin}>로그인</button>
-                </>
-                :<>
-                    {cookies.id}
-                </>}
-            </Log>
-        </Layout>
-        </>
-    )
+                    {typeof(cookies.id)}
+                    
+                </Log>
+            </Layout>
+            </>
+
+        )
+    }
+    
 }
 
 const Log=styled.div`
