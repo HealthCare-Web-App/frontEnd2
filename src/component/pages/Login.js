@@ -1,16 +1,20 @@
 import axios from "axios"
 import React,{useState} from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 import Layout from '../common/Layout';
 import styled from "styled-components";
 
 const Login = ()=>{
 
+    const navigate = useNavigate()
     const [contents,setContents]=useState({
         userId:'',
         userPassword:'',
     })
+
+    const [cookies,setCookie]=useCookies(['id'])
 
     const onChange = (e)=>{
         const {name,value}=e.target
@@ -20,23 +24,52 @@ const Login = ()=>{
     )}
 
     const goLogin=()=>{
-        axios.post(`/`)
+        if(contents.userId===''||contents.userPassword===''){
+            window.alert('아이디와 비밀번호를 입력해주세요')
+        }
+        axios.post('/login',{
+            loginId:contents.userId,
+            pw:contents.userPassword,
+        }).then((res)=>{
+            console.log(res.data)
+            setCookie('id',res.data.userId)
+            console.log(cookies.isLogin)
+            navigate('/')
+        })
+        .catch((e)=>{
+            console.error(e)
+            alert('아이디와 비밀번호가일치하지않습니다.')
+        })
     }
 
-    return(
-        <>
-        <Layout>
+    if (!cookies.id){
+        return(
+            <>
+            <Layout>
             <Log>
-                <p>LogIn</p>
-                <input placeholder="아이디를 입력해주세요." onChange={onChange} name='userId'/>
-                <input placeholder="비밀번호를 입력해주세요." onChange={onChange} name='userPassword'/> 
-
-                <Link to='/SignUp'>회원가입</Link>   
-                <button onClick={goLogin}>로그인</button>
+                로그인완료상태
             </Log>
-        </Layout>
-        </>
-    )
+            </Layout>
+            </>
+        )
+    }
+    else{
+        return(
+            <>
+            <Layout>
+                <Log>
+                <p>LogIn</p>
+                    <input placeholder="아이디를 입력해주세요." onChange={onChange} name='userId'/>
+                    <input placeholder="비밀번호를 입력해주세요." onChange={onChange} name='userPassword'/> 
+                    <Link to='/SignUp'>회원가입</Link>   
+                    <button onClick={goLogin}>로그인</button>                    
+                </Log>
+            </Layout>
+            </>
+
+        )
+    }
+    
 }
 
 const Log=styled.div`

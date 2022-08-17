@@ -22,12 +22,12 @@ function Posts({posts,limit,page,setPage,offset}) {
         <th>작성일</th>
         </thead>
         <tbody>
-        {posts.slice(offset,offset+limit).map(({id,title,userId,userNickname})=>(
-        <tr key={id}>
-          <td>{userId}</td>
+        {posts.slice(offset,offset+limit).map(({index,e,id,title,user,createDate})=>(
+        <tr key={index}>
+          <td>{e}</td>
           <td  onClick={()=>goRouteId(id)}>{title}</td>
-          <td>{userNickname}</td>
-          <td>아직</td>
+          <td>{user.nickname}</td>
+          <td>{createDate.split('T')[0]}</td>
         </tr>
         ))}
         </tbody>
@@ -50,14 +50,17 @@ const Table = styled.table`
   border-collapse:separate;
   border-spacing:0;
   width:100%;
+  
   th,
   td {
     padding: 6px 15px;
   }
   th {
-    background: #42444e;
-    color: #fff;
-    text-align: left;
+    background: #dee4f1;
+    color: #000;
+    text-align: center;
+    font-weight : 600;
+    font-family: 'Noto Sans KR', sans-serif;
   }
   td {
     border-right: 1px solid #c6c9cc;

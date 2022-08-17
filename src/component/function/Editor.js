@@ -1,14 +1,15 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import styled from 'styled-components';
+import { useCookies } from 'react-cookie';
 
 const Editor =({getValue,contents,setContent})=>{
-    
+    const [cookies]=useCookies('id')
     return(
         <>
         <InfoWrap>
             <input className = "title-input" type='text' value={contents.title} placeholder='제목' onChange={getValue} name='title'/>
-            <input className='userId-input' type='text' value={contents.userId} placeholder='작성자'onChange={getValue} name='userNickname'/>
+            <div>{cookies.id}</div>
         </InfoWrap>
         <CKEditor 
                 editor={ ClassicEditor }

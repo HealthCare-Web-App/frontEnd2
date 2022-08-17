@@ -1,11 +1,11 @@
 import axios from "axios"
 import React,{useState} from "react";
-
+import {useNavigate } from 'react-router-dom';
 import Layout from '../common/Layout';
 import styled from "styled-components";
 
 const SignUp=()=>{
-
+    const navigate=useNavigate()
     const [contents,setContents]=useState({
         loginId:'',
         pw:'',
@@ -25,6 +25,14 @@ const SignUp=()=>{
             pw:contents.pw,
             nickname:contents.nickname,
         })
+        .then(()=>{
+            navigate('/login')
+        })
+        .catch((e)=>{
+            alert(e.response.data)
+            return
+        })
+        
     }
 
     const patchUser=()=>{
@@ -45,7 +53,7 @@ const SignUp=()=>{
                     <input placeholder="비밀번호를 입력해주세요." onChange={onChange} name='pw'/> 
 
                     <div className="btn-area">
-                        <button onClick={goSignUp} className="signUp">로그인하기</button>
+                        <button onClick={goSignUp} className="signUp">회원가입</button>
                         <button onClick={patchUser} className="editUser">유저정보 수정</button>
                     </div>
                 </Sign>

@@ -9,7 +9,7 @@ const LayoutStyle = styled.div`
   padding-bottom: 80px;
   margin: 0 auto;
   border: 1px solid #dee4f1;
-  height: calc(100vh - 80px);
+  height: 200vh;
   margin-bottom: 50px;
 
   input {
@@ -23,13 +23,11 @@ const LayoutStyle = styled.div`
     width: 358px;
     padding: 15px;
   }
-
   input:focus,
   input:hover {
     outline: none;
     box-shadow: 0 0 0 1.5px #dee4f1, 0px 5px 13px 0px #dee4f1;
   }
-
   .wrapper {
     padding: 0 20px;
   }
@@ -39,7 +37,6 @@ const LayoutStyle = styled.div`
     padding: 20px;
     text-align: center;
   }
-
   .btm-menu {
     position: fixed;
     bottom: 0;
@@ -52,7 +49,6 @@ const LayoutStyle = styled.div`
     border-top-right-radius: 15px;
     justify-content: space-between;
   }
-
   .btm-menu > div {
     display: flex;
     flex-direction: column;
@@ -62,7 +58,6 @@ const LayoutStyle = styled.div`
     height: 80px;
     border-right: 1px solid #fff;
   }
-
   .btm-menu a {
     display: flex;
     flex-direction: column;
@@ -72,50 +67,23 @@ const LayoutStyle = styled.div`
     font-weight: 600;
     font-family: "Noto Sans KR", sans-serif;
   }
-
   .btm-menu span {
     margin-bottom: 10px;
   }
-
   .btm-menu .material-symbols-outlined {
     font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
   }
-
   .btm-menu > div:last-child {
     border-right: none;
   }
 `;
 
 const Layout = ({ children }) => {
-  const [cookies, removeCookie] = useCookies("id");
+  const [removeCookie] = useCookies(["id"]);
   const navigate = useNavigate();
   const logOut = () => {
     removeCookie("id");
-    console.log(cookies.undefined);
     navigate("/login");
-  };
-
-  const isLoginView = () => {
-    if (cookies.id === undefined || typeof cookies.id === "string") {
-      return (
-        <>
-          <>
-            {cookies.id}
-            <button onClick={logOut}>LogOut</button>
-          </>
-        </>
-      );
-    }
-    if (cookies.id === "undefined") {
-      return (
-        <>
-          <Link to="/login">
-            <span className="material-symbols-outlined">account_circle</span>내
-            정보
-          </Link>
-        </>
-      );
-    }
   };
 
   return (
@@ -136,7 +104,11 @@ const Layout = ({ children }) => {
               메인
             </Link>
           </div>
-          <div className="go-user">{isLoginView()}</div>
+          <Link to="/login">
+            <span className="material-symbols-outlined">account_circle</span>내
+            정보
+            <button onClick={logOut}>logOut</button>
+          </Link>
         </div>
       </LayoutStyle>
     </>
