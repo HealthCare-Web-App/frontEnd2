@@ -41,19 +41,18 @@ const Login = ()=>{
         })
     }
 
-    if (cookies.id === undefined){
+    if (!cookies.id){
         return(
             <>
             <Layout>
             <Log>
-                
-                로그인해주세요
+                로그인완료상태
             </Log>
             </Layout>
             </>
         )
     }
-    if (cookies.id ==='undefined'){
+    else{
         return(
             <>
             <Layout>

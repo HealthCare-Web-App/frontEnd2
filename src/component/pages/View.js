@@ -10,10 +10,8 @@ const View = ()=>{
         let navigate = useNavigate()
         const {id}=useParams()
         const [contents,setContents]=useState({
-            userId:'',
-            content:'',
             title:'',
-            userNickname:'',
+            content:''
         })
     
         const onRemove=(id)=>{
@@ -25,11 +23,8 @@ const View = ()=>{
         const viewNow=async()=>{
             const response = await axios.get(`/board/${id}`)
             setContents({
-                userId:response.data.userId,
-                userNickname:response.data.userNickname,
-                content:response.data.content,
                 title:response.data.title,
-                
+                content:response.data.content,
             }
             )
             
@@ -59,10 +54,10 @@ const View = ()=>{
         <>
         <Layout>
             <Title>
-                <input placeholder="이름" value={contents.title} onChange={onChange} name='title'/>
+                <input placeholder="제목" value={contents.title} onChange={onChange} name='title'/>
                 <input placeholder="작성자" value={contents.userNickname} onChange={onChange} name='userNickname'/> 
                 <button onClick={()=>{onRemove(id)}}>삭제</button>
-                <button onClick={reNew}>여기서수정</button>
+                <button onClick={reNew}>수정</button>
             </Title>
             <Body>
                 <textarea cols='50' rows='10' placeholder="내용" value={contents.content} onChange={onChange} name='content'></textarea>

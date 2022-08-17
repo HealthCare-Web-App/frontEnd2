@@ -1,12 +1,14 @@
 import React,{ useState} from "react";
 import axios from "axios"
 import styled from "styled-components"
+import { useCookies } from 'react-cookie';
 
 const Comment=({y})=>{
     const [contents,setContent]=useState({
         content:'',
-        userNickname:'',
     })
+
+    const [cookies]=useCookies('id')
 
     const [cmList,setCmList]=useState([])
 
@@ -20,6 +22,10 @@ const Comment=({y})=>{
     }
     const onPost=()=>{
      //   console.log(`/board/${id}`);
+        axios.post(`/board/${y}`,{
+            userId:cookies.id,
+            content:contents.content
+        })
     }
 
     const loadComments= async()=>{
@@ -41,42 +47,31 @@ const Comment=({y})=>{
         })
     }
 
+
     return(
         <>
             <CommentWrap>
                 <div className="PostComment">
                     <div className="abc">
-                        <input placeholder="작성자" name="userNickname" onChange={onChange}/>
                         <textarea placeholder="댓글입력" name="content" onChange={onChange}/>
                     </div>
                     <button onClick={onPost}>등록하기</button>
                 </div>
                 <button onClick={loadComments}>댓글보기</button>
                 <div className='commentUl'>
-                    {cmList.map(({id,userNickname,content})=>(
+                    {cmList.map(({id,userId,content})=>(
                         <div key={id} className="commentLi">
                             <div className="commentContents">
-                                <div>{userNickname}</div>
-                                <div>{content}</div>
+                                <div>작성자:{userId}</div>
+                                <div>내용:{content}</div>
                             </div>
-                            <button onClick={()=>aaa(id)}>삭제</button>
-                            <button onClick={()=>bbb(id)}>수정</button>
+                        {userId===Number(cookies.id)?
+                            <div>
+                                <button onClick={()=>aaa(id)}><span>삭제</span></button>
+                                <button onClick={()=>bbb(id)}><span>수정</span></button>
+                            </div>:<></>}
                         </div>
                     ))}
-                    <div className="commentLi">
-                        <div>ss</div>
-                        <div>rsaf</div>
-                        <button onClick={()=>aaa()}>삭제</button>
-                        <button onClick={()=>bbb()}>수정</button>
-                    </div>
-                    <div className="commentLi">
-                        <div className="commentContents">
-                            <div>ss</div>
-                            <div>r</div>
-                        </div>
-                        <button onClick={()=>aaa()}>삭제</button>
-                        <button onClick={()=>bbb()}>수정</button>
-                    </div>
                 </div>
             </CommentWrap>
 
@@ -104,10 +99,11 @@ button{
 }
 .commentLi{
     display:flex;
+    justify-content: space-between;
     button{
-
-        background-color:black;
-        color: #fff;
+        color: black;
+        background:none;
+        width:30px;
         border:none;
     }
 }

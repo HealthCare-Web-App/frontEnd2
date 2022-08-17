@@ -22,12 +22,12 @@ function Posts({posts,limit,page,setPage,offset}) {
         <th>작성일</th>
         </thead>
         <tbody>
-        {posts.slice(offset,offset+limit).map(({id,title,userId,userNickname})=>(
+        {posts.slice(offset,offset+limit).map(({id,title,user,createDate})=>(
         <tr key={id}>
-          <td>{userId}</td>
+          <td>{id}</td>
           <td  onClick={()=>goRouteId(id)}>{title}</td>
-          <td>{userNickname}</td>
-          <td>아직</td>
+          <td>{user.nickname}</td>
+          <td>{createDate.split('T')[0]}</td>
         </tr>
         ))}
         </tbody>

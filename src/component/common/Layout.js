@@ -100,20 +100,21 @@ const Layout = ({children})=>{
     }
 
     const isLoginView=()=>{
-        if (cookies.id === undefined|| typeof(cookies.id)==='string'){
-            return(
-                <>
-                    <>{cookies.id}<button onClick={logOut}>LogOut</button></>
-                </>
-            )
-        }
-        if (cookies.id ==='undefined'){
+        if (cookies.id){
             return(
                 <>
                 <Link to="/login">
                     <span className="material-symbols-outlined">account_circle</span>
                     내 정보
                 </Link>
+                  
+                </>
+            )
+        }
+        else {
+            return(
+                <>
+                  <>{cookies.id}<button onClick={logOut}>LogOut</button></>
                 </>
             )
         }
