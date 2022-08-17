@@ -33,6 +33,7 @@ const Login = ()=>{
         }).then((res)=>{
             console.log(res.data)
             setCookie('id',res.data.userId)
+            console.log(cookies.isLogin)
             navigate('/')
         })
         .catch((e)=>{
@@ -61,9 +62,7 @@ const Login = ()=>{
                     <input placeholder="아이디를 입력해주세요." onChange={onChange} name='userId'/>
                     <input placeholder="비밀번호를 입력해주세요." onChange={onChange} name='userPassword'/> 
                     <Link to='/SignUp'>회원가입</Link>   
-                    <button onClick={goLogin}>로그인</button>
-                    {typeof(cookies.id)}
-                    
+                    <button onClick={goLogin}>로그인</button>                    
                 </Log>
             </Layout>
             </>

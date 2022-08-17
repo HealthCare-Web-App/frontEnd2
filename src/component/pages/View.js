@@ -27,7 +27,6 @@ const View = ()=>{
                 content:response.data.content,
             }
             )
-            
         }
         viewNow()
     },[id])

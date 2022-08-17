@@ -91,34 +91,13 @@ const LayoutStyle = styled.div`
 
 const Layout = ({children})=>{
 
-    const [cookies,removeCookie]=useCookies('id')
+    const [removeCookie]=useCookies(['id'])
     const navigate=useNavigate()
     const logOut=()=>{
         removeCookie('id')
-        console.log(cookies.undefined)
         navigate('/login')
     }
 
-    const isLoginView=()=>{
-        if (cookies.id){
-            return(
-                <>
-                <Link to="/login">
-                    <span className="material-symbols-outlined">account_circle</span>
-                    내 정보
-                </Link>
-                  
-                </>
-            )
-        }
-        else {
-            return(
-                <>
-                  <>{cookies.id}<button onClick={logOut}>LogOut</button></>
-                </>
-            )
-        }
-    }
     
     return(
         <>
@@ -140,9 +119,11 @@ const Layout = ({children})=>{
                         메인
                     </Link>
                 </div>
-                <div className="go-user">
-                    {isLoginView()}
-                </div>
+                <Link to="/login">
+                    <span className="material-symbols-outlined">account_circle</span>
+                    내 정보
+                    <button onClick={logOut}>logOut</button>
+                </Link>
             </div>
         </LayoutStyle>
         </>

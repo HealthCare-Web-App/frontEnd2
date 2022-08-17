@@ -6,12 +6,12 @@ import { useCookies } from 'react-cookie';
 const Comment=({y})=>{
     const [contents,setContent]=useState({
         content:'',
+        patchContent:''
     })
-
     const [cookies]=useCookies('id')
-
     const [cmList,setCmList]=useState([])
 
+    const [toggle,setToggle]=useState(true)
 
     const onChange =(e)=>{
         const {name,value}=e.target
@@ -20,12 +20,13 @@ const Comment=({y})=>{
             [name]:value
         })
     }
-    const onPost=()=>{
+    const onPost=async ()=>{
      //   console.log(`/board/${id}`);
-        axios.post(`/board/${y}`,{
+        await axios.post(`/board/${y}`,{
             userId:cookies.id,
             content:contents.content
         })
+        loadComments()
     }
 
     const loadComments= async()=>{
@@ -36,16 +37,23 @@ const Comment=({y})=>{
     }
 
 
-    const aaa = (x)=>{
-        axios.delete(`/board/${y}/${x}`)
+    const aaa = async(x)=>{
+        await axios.delete(`/board/${y}/${x}`)
         loadComments()
     }
     
     const bbb = (x)=>{
-        axios.patch(`/board/${y}/${x}`,{
-            content:'수정댓글'
-        })
+        setToggle((state)=>(!state))
     }
+    
+    const ccc = async(x)=>{
+        await axios.patch(`/board/${y}/${x}`,{
+            content:contents.patchContent
+        })
+        setToggle((state)=>(!state))
+        loadComments()
+    }
+    
 
 
     return(
@@ -63,12 +71,21 @@ const Comment=({y})=>{
                         <div key={id} className="commentLi">
                             <div className="commentContents">
                                 <div>작성자:{userId}</div>
-                                <div>내용:{content}</div>
+                                {toggle===true?
+                                <div>내용:{content}</div>:<input className="kim" placeholder={content} onChange={onChange} name="patchContent"></input>}    
                             </div>
                         {userId===Number(cookies.id)?
                             <div>
-                                <button onClick={()=>aaa(id)}><span>삭제</span></button>
-                                <button onClick={()=>bbb(id)}><span>수정</span></button>
+                                {toggle===true?
+                                <>
+                                    <button onClick={()=>aaa(id)}><span>삭제</span></button>
+                                    <button onClick={()=>bbb(id)}><span>수정</span></button>
+                                </>
+                                :<>
+                                    <button onClick={()=>setToggle((state)=>(!state))}><span>x</span></button>
+                                    <button onClick={()=>ccc(id)}><span>완료</span></button>
+                                </>
+                                }
                             </div>:<></>}
                         </div>
                     ))}
@@ -98,6 +115,7 @@ button{
     width:20%;
 }
 .commentLi{
+    border:1px solid black;
     display:flex;
     justify-content: space-between;
     button{
@@ -106,6 +124,9 @@ button{
         width:30px;
         border:none;
     }
+}
+.kim{
+    width:50px;
 }
 `
 
