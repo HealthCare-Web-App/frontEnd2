@@ -24,8 +24,8 @@ const Write = ()=>{
     }
 
 
-    const uploadPost=()=>{
-      axios.post("/board",{
+    const uploadPost=async()=>{
+      await axios.post("/board",{
         userId:cookies.id,
         content:contents.body.replace(/(<([^>]+)>)/ig,""),
         title:contents.title
