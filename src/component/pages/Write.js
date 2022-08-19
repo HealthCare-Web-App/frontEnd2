@@ -1,7 +1,6 @@
 import React,{useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import Layout from '../common/Layout';
 import axios from 'axios';
 import styled from 'styled-components'
 import Editor from '../function/Editor';
@@ -9,7 +8,7 @@ import Editor from '../function/Editor';
 const Write = ()=>{
     
     let navigate = useNavigate()
-    const [cookies]=useCookies()
+    const [cookies]=useCookies(['nickname'])
     const [contents,setContent]=useState({
       title:'',
       body:''
@@ -36,12 +35,10 @@ const Write = ()=>{
 
 
     return(<>
-        <Layout>
         <FormWrapper>
             <Editor getValue={getValue} contents={contents} setContent={setContent} />
             <button className = "submit-button" onClick={uploadPost}>글쓰기</button>
         </FormWrapper>
-        </Layout>
 </>)
 }
 

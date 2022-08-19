@@ -79,10 +79,12 @@ const LayoutStyle = styled.div`
 `;
 
 const Layout = ({ children }) => {
-  const [removeCookie] = useCookies(["id"]);
+  const [cookies,removeCookie] = useCookies(['id','nickname'])
+
   const navigate = useNavigate();
   const logOut = () => {
-    removeCookie("id");
+    removeCookie('id');
+    removeCookie('nickname')
     navigate("/login");
   };
 
@@ -104,11 +106,25 @@ const Layout = ({ children }) => {
               메인
             </Link>
           </div>
-          <Link to="/login">
-            <span className="material-symbols-outlined">account_circle</span>내
-            정보
-            <button onClick={logOut}>logOut</button>
-          </Link>
+          {cookies.id===undefined?
+            <>
+            <Link to="/login">
+              <span className="material-symbols-outlined">account_circle</span>내
+              정보
+            </Link>
+            </>
+            :cookies.id==='undefined'?<>
+              <Link to="/login">
+                  <span className="material-symbols-outlined">account_circle</span>내
+                  정보
+                </Link>
+              </>:
+              <>
+              <Link to="/login">
+                  <span className="material-symbols-outlined">account_circle</span>{cookies.nickname}
+                </Link>
+              <button onClick={logOut}>LogOut</button>
+              </>}
         </div>
       </LayoutStyle>
     </>

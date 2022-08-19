@@ -1,4 +1,4 @@
-import React,{ useState} from "react";
+import React,{ useState,useEffect} from "react";
 import axios from "axios"
 import styled from "styled-components"
 import { useCookies } from 'react-cookie';
@@ -10,7 +10,6 @@ const Comment=({y})=>{
     })
     const [cookies]=useCookies('id')
     const [cmList,setCmList]=useState([])
-
     const [toggle,setToggle]=useState(true)
 
     const onChange =(e)=>{
@@ -30,12 +29,15 @@ const Comment=({y})=>{
     }
 
     const loadComments= async()=>{
-        const response = await axios.get(`/board/${y}`)
-        const commentDtoList = response.data.commentDtosList
-        setCmList(commentDtoList)
-        console.log(cmList)
+        try{
+            const response = await axios.get(`/board/${y}`)
+            const commentDtoList = response.data.commentDtosList
+            setCmList(commentDtoList)
+        }
+        catch(error){
+            console.error(error)
+        }
     }
-
 
     const aaa = async(x)=>{
         await axios.delete(`/board/${y}/${x}`)
@@ -44,6 +46,7 @@ const Comment=({y})=>{
     
     const bbb = (x)=>{
         setToggle((state)=>(!state))
+        console.log(x)
     }
     
     const ccc = async(x)=>{
@@ -53,6 +56,10 @@ const Comment=({y})=>{
         setToggle((state)=>(!state))
         loadComments()
     }
+
+    useEffect(()=>{
+        loadComments()
+      },)
     
 
 
@@ -65,28 +72,28 @@ const Comment=({y})=>{
                     </div>
                     <button onClick={onPost}>등록하기</button>
                 </div>
-                <button onClick={loadComments}>댓글보기</button>
                 <div className='commentUl'>
-                    {cmList.map(({id,userId,content})=>(
+                    {cmList.map(({id,nickname,userId,content})=>(
                         <div key={id} className="commentLi">
                             <div className="commentContents">
-                                <div>작성자:{userId}</div>
+                                <div>작성자:{nickname}</div>
                                 {toggle===true?
                                 <div>내용:{content}</div>:<input className="kim" placeholder={content} onChange={onChange} name="patchContent"></input>}    
                             </div>
-                        {userId===Number(cookies.id)?
+                            {userId===Number(cookies.id)?
                             <div>
-                                {toggle===true?
+                                {toggle?
                                 <>
-                                    <button onClick={()=>aaa(id)}><span>삭제</span></button>
                                     <button onClick={()=>bbb(id)}><span>수정</span></button>
+                                    <button onClick={()=>aaa(id)}><span>삭제</span></button>
                                 </>
                                 :<>
                                     <button onClick={()=>setToggle((state)=>(!state))}><span>x</span></button>
                                     <button onClick={()=>ccc(id)}><span>완료</span></button>
                                 </>
                                 }
-                            </div>:<></>}
+                            </div>
+                            :<></>}
                         </div>
                     ))}
                 </div>
