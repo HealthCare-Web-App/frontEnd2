@@ -1,7 +1,6 @@
 import axios from "axios"
 import React,{useState} from "react";
 import {useNavigate } from 'react-router-dom';
-import Layout from '../common/Layout';
 import styled from "styled-components";
 
 const SignUp=()=>{
@@ -35,29 +34,24 @@ const SignUp=()=>{
         
     }
 
-    const patchUser=()=>{
-        axios.patch(`/users`,{
-            userId:contents.userId,
-            nickname:contents.nickname
-        })
+    const goLogin=()=>{
+        navigate('/login')
     }
 
 
     return(
         <>
-            <Layout>
-                <Sign>
-                    <p>Join Us</p>
-                    <input placeholder="닉네임을 입력해주세요." onChange={onChange} name='nickname'/>
-                    <input placeholder="아이디를 입력해주세요." onChange={onChange} name='loginId'/>
-                    <input placeholder="비밀번호를 입력해주세요." onChange={onChange} name='pw'/> 
+            <Sign>
+                <p>Join Us</p>
+                <input placeholder="닉네임을 입력해주세요." onChange={onChange} name='nickname'/>
+                <input placeholder="아이디를 입력해주세요." onChange={onChange} name='loginId'/>
+                <input placeholder="비밀번호를 입력해주세요." onChange={onChange} name='pw'/> 
 
-                    <div className="btn-area">
-                        <button onClick={goSignUp} className="signUp">회원가입</button>
-                        <button onClick={patchUser} className="editUser">유저정보 수정</button>
-                    </div>
-                </Sign>
-            </Layout>
+                <div className="btn-area">
+                    <button onClick={goSignUp} className="signUp">회원가입</button>
+                    <button onClick={goLogin} className="editUser">로그인</button>
+                </div>
+            </Sign>
         </>
     )
 }
@@ -67,7 +61,7 @@ const Sign=styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100% - 152px);
+    //height: calc(100% - 152px);
 
     p {
         font-family: "Poppins", sans-serif;

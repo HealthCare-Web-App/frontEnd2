@@ -3,7 +3,6 @@ import React,{useState} from "react";
 import { Link,useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
-import Layout from '../common/Layout';
 import styled from "styled-components";
 
 const Login = ()=>{
@@ -14,8 +13,8 @@ const Login = ()=>{
         userPassword:'',
     })
 
-    const [cookies,setCookie]=useCookies(['id'])
-
+    const [cookies,setCookie] = useCookies(['id','nickname'])
+    
     const onChange = (e)=>{
         const {name,value}=e.target
         setContents({...contents,
@@ -33,7 +32,7 @@ const Login = ()=>{
         }).then((res)=>{
             console.log(res.data)
             setCookie('id',res.data.userId)
-            console.log(cookies.isLogin)
+            setCookie('nickname',res.data.nickname)
             navigate('/')
         })
         .catch((e)=>{
@@ -42,33 +41,28 @@ const Login = ()=>{
         })
     }
 
-    if (!cookies.id){
+    
         return(
             <>
-            <Layout>
-            <Log>
-                로그인완료상태
-            </Log>
-            </Layout>
-            </>
-        )
-    }
-    else{
-        return(
-            <>
-            <Layout>
-                <Log>
+                {cookies.id===undefined?
+                    <Log>
+                    <p>LogIn</p>
+                        <input placeholder="아이디를 입력해주세요." onChange={onChange} name='userId'/>
+                        <input placeholder="비밀번호를 입력해주세요." onChange={onChange} name='userPassword'/> 
+                        <Link to='/SignUp'>회원가입</Link>   
+                        <button onClick={goLogin}>로그인</button>                    
+                    </Log>
+                :cookies.id==='undefined'?<><Log>
                 <p>LogIn</p>
                     <input placeholder="아이디를 입력해주세요." onChange={onChange} name='userId'/>
                     <input placeholder="비밀번호를 입력해주세요." onChange={onChange} name='userPassword'/> 
                     <Link to='/SignUp'>회원가입</Link>   
                     <button onClick={goLogin}>로그인</button>                    
-                </Log>
-            </Layout>
+                </Log></>:<>{cookies.nickname}</>}
             </>
 
         )
-    }
+    
     
 }
 
@@ -77,7 +71,7 @@ const Log=styled.div`
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
-    height: calc(100% - 152px);
+    // height: calc(100% - 152px);
 
 
     p {
@@ -122,3 +116,4 @@ const Log=styled.div`
 `
 
 export default Login
+

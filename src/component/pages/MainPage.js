@@ -7,7 +7,6 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import StopWatch from "../function/StopWatch.js";
 import List from "../function/Accordion";
-import Layout from "../common/Layout";
 
 export const dateFormat = (date) => {
   return moment(date).format("YYYYMMDD");
@@ -77,7 +76,6 @@ const MainPage = () => {
 
   return (
     <>
-      <Layout>
         <Main>
           <div className="container">
             <div className="wrapper">
@@ -112,7 +110,6 @@ const MainPage = () => {
             </button>
           </div>
         </Main>
-      </Layout>
     </>
   );
 };

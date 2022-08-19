@@ -1,4 +1,3 @@
-import Layout from "../common/Layout"
 import Posts from "../function/Post"
 import axios from "axios";
 
@@ -29,10 +28,8 @@ const Board=()=>{
 
     return(
         <>
-            <Layout>
-                <Posts posts={posts} offset={offset} limit={limit} page={page} setPage={setPage}/>
-                <Pagination total={posts.length} limit={limit} page={page} setPage={setPage}/>
-            </Layout>
+            <Posts posts={posts} offset={offset} limit={limit} page={page} setPage={setPage}/>
+            <Pagination total={posts.length} limit={limit} page={page} setPage={setPage}/>  
         </>
     )
 }

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-function Posts({posts,limit,page,setPage,offset}) {
+function Posts({posts,limit,offset}) {
   const navigate = useNavigate()
   const goRouteId=(id)=>{
     navigate(`/board/${id}`)
@@ -22,14 +22,14 @@ function Posts({posts,limit,page,setPage,offset}) {
         <th>작성일</th>
         </thead>
         <tbody>
-        {posts.slice(offset,offset+limit).map(({index,e,id,title,user,createDate})=>(
-        <tr key={index}>
-          <td>{e}</td>
-          <td  onClick={()=>goRouteId(id)}>{title}</td>
-          <td>{user.nickname}</td>
-          <td>{createDate.split('T')[0]}</td>
-        </tr>
-        ))}
+        {posts.slice(offset,offset+limit).map((key,value)=>(
+            <tr key = 'table'>
+              <td>{value+1}</td>
+              <td  onClick={()=>goRouteId(key.id)}>{key.title}</td>
+             <td>{key.user.nickname}</td>
+             <td>{key.createDate.split('T')[0]}</td>
+            </tr>
+          ))}
         </tbody>
         </Table>
     </Wrap>    
