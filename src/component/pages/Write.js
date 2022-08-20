@@ -24,12 +24,16 @@ const Write = ()=>{
 
 
     const uploadPost=async()=>{
-      await axios.post("/board",{
-        userId:cookies.id,
-        content:contents.body.replace(/(<([^>]+)>)/ig,""),
-        title:contents.title
+      try{
+        await axios.post("/board",{
+          userId:cookies.id,
+          content:contents.body.replace(/(<([^>]+)>)/ig,""),
+          title:contents.title
+        })
       }
-      )
+      catch{
+        alert('로그인을해주세요')
+      }
       navigate('/board')
     }
 

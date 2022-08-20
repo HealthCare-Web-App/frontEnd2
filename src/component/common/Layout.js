@@ -109,14 +109,12 @@ const Layout = ({ children }) => {
           {cookies.id===undefined?
             <>
             <Link to="/login">
-              <span className="material-symbols-outlined">account_circle</span>내
-              정보
+              <span className="material-symbols-outlined">account_circle</span>로그인
             </Link>
             </>
             :cookies.id==='undefined'?<>
               <Link to="/login">
-                  <span className="material-symbols-outlined">account_circle</span>내
-                  정보
+                  <span className="material-symbols-outlined">account_circle</span>로그인
                 </Link>
               </>:
               <>

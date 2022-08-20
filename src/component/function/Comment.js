@@ -10,7 +10,7 @@ const Comment=({y})=>{
     })
     const [cookies]=useCookies('id')
     const [cmList,setCmList]=useState([])
-    const [toggle,setToggle]=useState(true)
+    const [toggle,setToggle]=useState(0)
 
     const onChange =(e)=>{
         const {name,value}=e.target
@@ -45,7 +45,7 @@ const Comment=({y})=>{
     }
     
     const bbb = (x)=>{
-        setToggle((state)=>(!state))
+        setToggle(x)
         console.log(x)
     }
     
@@ -77,18 +77,19 @@ const Comment=({y})=>{
                         <div key={id} className="commentLi">
                             <div className="commentContents">
                                 <div>작성자:{nickname}</div>
-                                {toggle===true?
+                                {toggle!==id?
                                 <div>내용:{content}</div>:<input className="kim" placeholder={content} onChange={onChange} name="patchContent"></input>}    
+                                
                             </div>
                             {userId===Number(cookies.id)?
                             <div>
-                                {toggle?
+                                {toggle!==id?
                                 <>
                                     <button onClick={()=>bbb(id)}><span>수정</span></button>
                                     <button onClick={()=>aaa(id)}><span>삭제</span></button>
                                 </>
                                 :<>
-                                    <button onClick={()=>setToggle((state)=>(!state))}><span>x</span></button>
+                                    <button onClick={()=>bbb(0)}><span>x</span></button>
                                     <button onClick={()=>ccc(id)}><span>완료</span></button>
                                 </>
                                 }
