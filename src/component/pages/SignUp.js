@@ -34,9 +34,7 @@ const SignUp=()=>{
         
     }
 
-    const goLogin=()=>{
-        navigate('/login')
-    }
+    
 
 
     return(
@@ -49,7 +47,6 @@ const SignUp=()=>{
 
                 <div className="btn-area">
                     <button onClick={goSignUp} className="signUp">회원가입</button>
-                    <button onClick={goLogin} className="editUser">로그인</button>
                 </div>
             </Sign>
         </>
