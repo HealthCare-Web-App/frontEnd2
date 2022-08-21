@@ -7,11 +7,15 @@ function StopWatch(props) {
   const [start, setStart] = useState(false);
 
   useEffect(() => {
-    console.log(props); // ["00" , "00"]
+    const time = props.data;
 
-    // const a = ["00", "00"];
-    setMin(props[0]);
-    setSec(props[1]);
+    setMin("00");
+    setSec("00");
+
+    if (time !== undefined) {
+      setMin(time[0]);
+      setSec(time[1]);
+    }
   }, [props]);
 
   useEffect(() => {

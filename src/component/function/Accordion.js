@@ -113,7 +113,7 @@ const Searchbar = (props) => {
   };
   return (
     <input
-      className="searchbar"
+      className="searchbar main"
       type="text"
       placeholder="찾으시는 운동을 입력해주세요."
       onChange={handleChange}
@@ -128,13 +128,13 @@ const Question = (props) => {
       <div className="list-div">
         <input
           type="text"
-          className="main-tit"
+          className="main-tit main"
           defaultValue={props.tit}
           readOnly={props.tit !== "" ? true : false}
         />
         <input
           type="text"
-          className="sub-tit"
+          className="sub-tit main"
           defaultValue={props.subTit}
           readOnly={props.tit !== "" ? true : false}
         />
