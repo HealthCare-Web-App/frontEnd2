@@ -136,20 +136,15 @@ const Layout = ({ children }) => {
           ) : cookies.id === "undefined" ? (
             <>
               <Link to="/login">
-                <span className="material-symbols-outlined">
-                  account_circle
-                </span>
-                로그인
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link to="/login">
-                <span className="material-symbols-outlined">
-                  account_circle
-                </span>
-                {cookies.nickname}
-              </Link>
+
+                  <span className="material-symbols-outlined">account_circle</span>로그인
+                </Link>
+              </>:
+              <>
+              <Link to="/">
+                  <span className="material-symbols-outlined">account_circle</span>{cookies.nickname}
+                </Link>
+
               <button onClick={logOut}>LogOut</button>
             </>
           )}
