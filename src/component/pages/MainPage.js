@@ -24,10 +24,13 @@ const MainPage = () => {
       setQuestions("");
       setQuestions(res.data);
 
-      const result = res.data.time.split(":");
-      // const result = ["00", "00"];
-      console.log(result); // ["00" , "00"];
-      setTime(result);
+      if (res.data.length > 0) {
+        const result = res.data[0].time.split(":");
+        setTime(result);
+      } else {
+        const first = ["00", "00"];
+        setTime(first);
+      }
     });
   }, [date]);
 
@@ -104,16 +107,21 @@ const MainPage = () => {
           </div>
 
           <div id="Accorion">
-            <button type="button" className="add-list" onClick={onCreate}>
-              추가하기
-              <span className="material-symbols-outlined">playlist_add</span>
-            </button>
+            <div className="btn-area">
+              <button type="button" className="add-list" onClick={onCreate}>
+                추가하기
+                <span className="material-symbols-outlined">playlist_add</span>
+              </button>
+              <button
+                type="button"
+                className="save-list save-btn"
+                onClick={saveList}
+              >
+                저장하기
+              </button>
+            </div>
             <List data={questions} />
           </div>
-
-          <button type="button" className="save-list" onClick={saveList}>
-            저장하기
-          </button>
         </div>
       </Main>
     </>
@@ -126,6 +134,12 @@ const Main = styled.div`
     justify-content: center;
     align-items: center;
     margin: 20px 0 40px;
+  }
+
+  .btn-area {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 20px 10px;
   }
 
   button.add-list {
@@ -141,7 +155,7 @@ const Main = styled.div`
     transition: 0.25s;
     position: relative;
     float: right;
-    margin: 0 20px 10px;
+    margin-right: 10px;
   }
 
   button.add-list > span {
@@ -149,21 +163,6 @@ const Main = styled.div`
     top: 50%;
     left: 15px;
     transform: translateY(-50%);
-  }
-
-  button.save-list {
-    background-color: #fe6229;
-    color: #fff;
-    border: none;
-    display: block;
-    padding: 10px 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 0 1.5px #dee4f1, 0px 5px 13px 0px #dee4f1;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.25s;
-    width: 115px;
-    margin: 30px auto 0;
   }
 `;
 export default MainPage;
