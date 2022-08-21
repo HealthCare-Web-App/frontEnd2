@@ -9,13 +9,10 @@ const LayoutStyle = styled.div`
   padding-bottom: 80px;
   margin: 0 auto;
   border: 1px solid #dee4f1;
-  min-height: calc(100vh - 80px);
+  height: 200vh;
+  margin-bottom: 50px;
 
-  a {
-    text-decoration: none;
-  }
-
-  input.main {
+  input {
     font-family: "Poppins", sans-serif;
     font-size: 15px;
     font-weight: 400;
@@ -26,8 +23,8 @@ const LayoutStyle = styled.div`
     width: 358px;
     padding: 15px;
   }
-  input.main:focus,
-  input.main:hover {
+  input:focus,
+  input:hover {
     outline: none;
     box-shadow: 0 0 0 1.5px #dee4f1, 0px 5px 13px 0px #dee4f1;
   }
@@ -52,8 +49,7 @@ const LayoutStyle = styled.div`
     border-top-right-radius: 15px;
     justify-content: space-between;
   }
-  .btm-menu > div,
-  .btm-menu > a {
+  .btm-menu > div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -80,29 +76,15 @@ const LayoutStyle = styled.div`
   .btm-menu > div:last-child {
     border-right: none;
   }
-
-  .save-btn {
-    background-color: #fe6229;
-    color: #fff;
-    border: none;
-    display: block;
-    padding: 10px 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 0 1.5px #dee4f1, 0px 5px 13px 0px #dee4f1;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.25s;
-    width: 115px;
-  }
 `;
 
 const Layout = ({ children }) => {
-  const [cookies, removeCookie] = useCookies(["id", "nickname"]);
+  const [cookies,removeCookie] = useCookies(['id','nickname'])
 
   const navigate = useNavigate();
   const logOut = () => {
-    removeCookie("id");
-    removeCookie("nickname");
+    removeCookie('id');
+    removeCookie('nickname')
     navigate("/login");
   };
 
@@ -124,19 +106,14 @@ const Layout = ({ children }) => {
               메인
             </Link>
           </div>
-          {cookies.id === undefined ? (
+          {cookies.id===undefined?
             <>
-              <Link to="/login">
-                <span className="material-symbols-outlined">
-                  account_circle
-                </span>
-                로그인
-              </Link>
+            <Link to="/login">
+              <span className="material-symbols-outlined">account_circle</span>로그인
+            </Link>
             </>
-          ) : cookies.id === "undefined" ? (
-            <>
+            :cookies.id==='undefined'?<>
               <Link to="/login">
-
                   <span className="material-symbols-outlined">account_circle</span>로그인
                 </Link>
               </>:
@@ -144,10 +121,8 @@ const Layout = ({ children }) => {
               <Link to="/">
                   <span className="material-symbols-outlined">account_circle</span>{cookies.nickname}
                 </Link>
-
               <button onClick={logOut}>LogOut</button>
-            </>
-          )}
+              </>}
         </div>
       </LayoutStyle>
     </>
