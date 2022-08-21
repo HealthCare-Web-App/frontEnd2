@@ -23,7 +23,7 @@ function Posts({posts,limit,offset}) {
         </thead>
         <tbody>
         {posts.slice(offset,offset+limit).map((key,value)=>(
-            <tr key = 'table'>
+            <tr key = {value+1}>
               <td>{value+1}</td>
               <td  onClick={()=>goRouteId(key.id)}>{key.title}</td>
              <td>{key.user.nickname}</td>
