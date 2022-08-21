@@ -1,22 +1,40 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-function StopWatch() {
-  const [time, setTime] = useState(0);
+function StopWatch(props) {
+  const [min, setMin] = useState(0);
+  const [sec, setSec] = useState(0);
   const [start, setStart] = useState(false);
 
   useEffect(() => {
-    let interval = null;
+    console.log(props); // ["00" , "00"]
+
+    // const a = ["00", "00"];
+    setMin(props[0]);
+    setSec(props[1]);
+  }, [props]);
+
+  useEffect(() => {
+    let interval1 = null;
+    let interval2 = null;
 
     if (start) {
-      interval = setInterval(() => {
-        setTime((prevTime) => prevTime + 10);
-      }, 10);
+      interval1 = setInterval(() => {
+        setSec((prevTime) => Number(prevTime) + 1);
+      }, 1000);
+
+      interval2 = setInterval(() => {
+        setMin((prevTime) => Number(prevTime) + 1);
+      }, 60000);
     } else {
-      clearInterval(interval);
+      clearInterval(interval1);
+      clearInterval(interval2);
     }
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval1);
+      clearInterval(interval2);
+    };
   }, [start]);
 
   return (
@@ -25,10 +43,12 @@ function StopWatch() {
         <Timer>
           <div className="timer">
             <span className="digits min">
-              {("0" + Math.floor((time / 60000) % 60)).slice(-2)}:
+              {("0" + Math.floor(min % 60)).slice(-2)}:
+              {/* {("0" + Math.floor((min / 60000) % 60)).slice(-2)}: */}
             </span>
             <span className="digits sec">
-              {("0" + Math.floor((time / 1000) % 60)).slice(-2)}
+              {("0" + Math.floor(sec % 60)).slice(-2)}
+              {/* {("0" + Math.floor((sec / 1000) % 60)).slice(-2)} */}
             </span>
           </div>
         </Timer>
@@ -57,7 +77,8 @@ function StopWatch() {
               <span
                 className="material-symbols-outlined"
                 onClick={() => {
-                  setTime(0);
+                  setMin(0);
+                  setSec(0);
                   setStart(false);
                 }}
               >

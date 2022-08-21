@@ -15,6 +15,7 @@ export const dateFormat = (date) => {
 const MainPage = () => {
   const [questions, setQuestions] = useState([]);
   const [date, setDate] = useState();
+  const [time, setTime] = useState();
   const [cookies] = useCookies("id");
   let id = cookies.id;
 
@@ -22,6 +23,11 @@ const MainPage = () => {
     axios.get(`/calendar/${dateFormat(date)}/${id}`).then((res) => {
       setQuestions("");
       setQuestions(res.data);
+
+      const result = res.data.time.split(":");
+      // const result = ["00", "00"];
+      console.log(result); // ["00" , "00"];
+      setTime(result);
     });
   }, [date]);
 
@@ -76,40 +82,40 @@ const MainPage = () => {
 
   return (
     <>
-        <Main>
-          <div className="container">
-            <div className="wrapper">
-              <Calendar
-                onChange={setDate}
-                value={date}
-                formatDay={(locale, date) =>
-                  date.toLocaleString("en", { day: "numeric" })
-                }
-              />
+      <Main>
+        <div className="container">
+          <div className="wrapper">
+            <Calendar
+              onChange={setDate}
+              value={date}
+              formatDay={(locale, date) =>
+                date.toLocaleString("en", { day: "numeric" })
+              }
+            />
 
-              <div className="today-wrap">
-                <input
-                  type="hidden"
-                  id="date"
-                  value={moment(date).format("YYYYMMDD")}
-                ></input>
-                <StopWatch />
-              </div>
+            <div className="today-wrap">
+              <input
+                type="hidden"
+                id="date"
+                value={moment(date).format("YYYYMMDD")}
+              ></input>
+              <StopWatch data={time} />
             </div>
-
-            <div id="Accorion">
-              <button type="button" className="add-list" onClick={onCreate}>
-                추가하기
-                <span className="material-symbols-outlined">playlist_add</span>
-              </button>
-              <List data={questions} />
-            </div>
-
-            <button type="button" className="save-list" onClick={saveList}>
-              저장하기
-            </button>
           </div>
-        </Main>
+
+          <div id="Accorion">
+            <button type="button" className="add-list" onClick={onCreate}>
+              추가하기
+              <span className="material-symbols-outlined">playlist_add</span>
+            </button>
+            <List data={questions} />
+          </div>
+
+          <button type="button" className="save-list" onClick={saveList}>
+            저장하기
+          </button>
+        </div>
+      </Main>
     </>
   );
 };
