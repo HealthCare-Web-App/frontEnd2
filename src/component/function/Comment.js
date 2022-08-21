@@ -25,8 +25,11 @@ const Comment=({y})=>{
             userId:cookies.id,
             content:contents.content
         })
+        setContent({...contents,
+            content:''})
         loadComments()
     }
+
 
     const loadComments= async()=>{
         try{
@@ -46,14 +49,13 @@ const Comment=({y})=>{
     
     const bbb = (x)=>{
         setToggle(x)
-        console.log(x)
     }
     
     const ccc = async(x)=>{
         await axios.patch(`/board/${y}/${x}`,{
             content:contents.patchContent
         })
-        setToggle((state)=>(!state))
+        setToggle(0)
         loadComments()
     }
 
@@ -61,14 +63,12 @@ const Comment=({y})=>{
         loadComments()
       },)
     
-
-
     return(
         <>
             <CommentWrap>
                 <div className="PostComment">
                     <div className="abc">
-                        <textarea placeholder="댓글입력" name="content" onChange={onChange}/>
+                        <textarea placeholder="댓글입력" value={contents.content} name="content" onChange={onChange}/>
                     </div>
                     <button onClick={onPost}>등록하기</button>
                 </div>

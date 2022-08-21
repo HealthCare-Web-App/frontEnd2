@@ -13,7 +13,9 @@ const View = ()=>{
     const [onPatch,setonPatch]=useState(true)
     const [contents,setContents]=useState({
         title:'',
+        patchTitle:'',
         content:'',
+        patchContent:'',
         nickname:'',
     })
     
@@ -45,15 +47,24 @@ const View = ()=>{
     }
     const reNew=async()=>{
         await axios.patch(`/board/${id}`,{
-            content:contents.content,
-            title:contents.title
+            content:contents.patchContent,
+            title:contents.patchTitle
         })
         navigate('/board')
     }
    
-    const toggle=()=>{
+    const toggle=(boolean)=>{
         setonPatch(!onPatch)
-        console.log(onPatch)
+        if(boolean===true)
+        {
+            console.log('트루')
+        }
+        else{
+            setContents({...contents,
+                patchContent:contents.content,
+                patchTitle:contents.title
+            })
+        }
     }
     return(
         <>
@@ -65,19 +76,19 @@ const View = ()=>{
                 <div className="title">{contents.title}</div>
                 <div className="writer">작성자:{contents.nickname}</div>
                 <button onClick={()=>{onRemove(id)}}>삭제</button>
-                <button onClick={toggle}>수정</button>
+                <button onClick={()=>toggle(true)}>수정토글</button>
                 </header>
                 <div className="body">{contents.content}</div>
             </Styless>
             </>
             :
             <>
-                <input placeholder="제목" value={contents.title} onChange={onChange} name='title'/>
+                <input placeholder={contents.title} value={contents.patchTitle} onChange={onChange} name='patchTitle'/>
                 <span>작성자:{contents.nickname}</span>
-                <button onClick={toggle}>수정취소</button>
+                <button onClick={()=>toggle(false)}>수정취소</button>
                 <button onClick={reNew}>수정완료</button>
                 <Body>
-                <textarea cols='50' rows='10' placeholder="내용" value={contents.content} onChange={onChange} name='content'></textarea>
+                <textarea cols='50' rows='10' placeholder={contents.content} value={contents.patchContent} onChange={onChange} name='patchContent'></textarea>
                 </Body>
             </>:
             <>

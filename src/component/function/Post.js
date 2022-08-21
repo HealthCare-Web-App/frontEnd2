@@ -12,7 +12,7 @@ function Posts({ posts, limit, offset }) {
     <>
       <Wrap>
         <Link to="/write">
-          <button className="save-btn">작성</button>
+          <button>작성</button>
         </Link>
         <Table>
           <thead>
