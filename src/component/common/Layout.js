@@ -118,7 +118,7 @@ const Layout = ({ children }) => {
                 </Link>
               </>:
               <>
-              <Link to="/login">
+              <Link to="/">
                   <span className="material-symbols-outlined">account_circle</span>{cookies.nickname}
                 </Link>
               <button onClick={logOut}>LogOut</button>
