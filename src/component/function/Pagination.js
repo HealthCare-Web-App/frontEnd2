@@ -43,8 +43,8 @@ const Button = styled.button`
   border-radius: 8px;
   padding: 8px;
   margin: 0;
-  background: black;
-  color: white;
+  background: #dee4f1;
+  color: black;
   font-size: 1rem;
   width: 30px;
   height: 30px;
@@ -54,7 +54,7 @@ const Button = styled.button`
   font-family: "Poppins", sans-serif;
 
   &:hover {
-    background: #fe6229;
+    background: #dee4f1;
     cursor: pointer;
     transform: translateY(-2px);
   }
@@ -66,7 +66,7 @@ const Button = styled.button`
   }
 
   &[aria-current] {
-    background: #dfbd85;
+    background: #fe6229;
     font-weight: bold;
     cursor: revert;
     transform: revert;

@@ -17,7 +17,6 @@ const Editor = ({ getValue, contents, setContent }) => {
       </InfoWrap>
       <CKEditor
         editor={ClassicEditor}
-        data="내용을 입력해주세요"
         onReady={(editor) => {
           // You can store the "editor" and use when it is needed.
           console.log("Editor is ready to use!", editor);

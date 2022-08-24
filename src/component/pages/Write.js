@@ -29,7 +29,7 @@ const Write = () => {
         title: contents.title,
       });
     } catch {
-      alert("로그인을해주세요");
+      alert("로그인/내용을 채워주세요");
     }
     navigate("/board");
   };
