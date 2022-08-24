@@ -38,9 +38,11 @@ const LayoutStyle = styled.div`
   }
 
   header {
-    font-size: 32px;
-    padding: 20px;
-    text-align: center;
+    padding-bottom:5px;
+    text-align:center;
+    img{
+      width:330px;
+    }
   }
   .btm-menu {
     position: fixed;
@@ -111,7 +113,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <LayoutStyle>
-        <header>헬스기록헤더로고</header>
+        <header><img alt="header" src="/header.jpg"></img></header>
         {children}
         <div className="btm-menu">
           <div className="go-write">
@@ -150,9 +152,8 @@ const Layout = ({ children }) => {
                 <span className="material-symbols-outlined">
                   account_circle
                 </span>
-                {cookies.nickname}
+                <span onClick={logOut} >{cookies.nickname}/LogOut</span>
               </Link>
-              <button onClick={logOut}>LogOut</button>
             </>
           )}
         </div>

@@ -78,19 +78,19 @@ const Comment=({y})=>{
                             <div className="commentContents">
                                 <div>작성자:{nickname}</div>
                                 {toggle!==id?
-                                <div>내용:{content}</div>:<input className="kim" placeholder={content} onChange={onChange} name="patchContent"></input>}    
+                                <div>내용:{content}</div>:<input placeholder={content} onChange={onChange} name="patchContent"></input>}    
                                 
                             </div>
                             {userId===Number(cookies.id)?
                             <div>
                                 {toggle!==id?
                                 <>
-                                    <button onClick={()=>bbb(id)}><span>수정</span></button>
-                                    <button onClick={()=>aaa(id)}><span>삭제</span></button>
+                                    <button onClick={()=>bbb(id)}>수정</button>
+                                    <button onClick={()=>aaa(id)}>삭제</button>
                                 </>
                                 :<>
-                                    <button onClick={()=>bbb(0)}><span>x</span></button>
-                                    <button onClick={()=>ccc(id)}><span>완료</span></button>
+                                    <button onClick={()=>bbb(0)}>취소</button>
+                                    <button onClick={()=>ccc(id)}>등록</button>
                                 </>
                                 }
                             </div>
@@ -110,6 +110,12 @@ width:100%;
 margin-top: 5px;
 .PostComment{
     display:flex;
+    button{
+        width:20%;
+        background-color:#fe6229;
+        color:white;
+        border:none;
+    }
 }
 .abc{
     display:flex;
@@ -119,23 +125,24 @@ margin-top: 5px;
         height:60px;
     }
 }
-button{
-    width:20%;
-}
+
 .commentLi{
+    height:100%;
     border:1px solid black;
     display:flex;
     justify-content: space-between;
+    .commentContents{
+        height:100%;
+    }
     button{
         color: black;
-        background:none;
-        width:30px;
+        background-color:white;
+        width:40px;
+        height:100%;
         border:none;
     }
 }
-.kim{
-    width:50px;
-}
+
 `
 
 export default Comment

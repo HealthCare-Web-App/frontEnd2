@@ -65,8 +65,7 @@ const SignUp = () => {
 
 const Sign = styled.div`
   position: absolute;
-  top: calc(50% - 70px);
-  transform: translateY(-50%);
+  top: 150px;
 
   display: flex;
   flex-direction: column;

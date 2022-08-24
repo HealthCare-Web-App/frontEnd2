@@ -56,9 +56,7 @@ const View = ()=>{
     const toggle=(boolean)=>{
         setonPatch(!onPatch)
         if(boolean===true)
-        {
-            console.log('트루')
-        }
+        {}
         else{
             setContents({...contents,
                 patchContent:contents.content,
@@ -73,23 +71,35 @@ const View = ()=>{
             <>
             <Styless>
                 <header>
-                <div className="title">{contents.title}</div>
-                <div className="writer">작성자:{contents.nickname}</div>
-                <button onClick={()=>{onRemove(id)}}>삭제</button>
-                <button onClick={()=>toggle(true)}>수정토글</button>
+                    <div className="headers">
+                        <div className="title">{contents.title}</div>
+                        <div className="writer">작성자:{contents.nickname}</div>
+                    </div>
+                    <div className="buttons">
+                        <button onClick={()=>{onRemove(id)}}>삭제</button>
+                        <button onClick={()=>toggle(true)}>수정</button>
+                    </div>
                 </header>
                 <div className="body">{contents.content}</div>
             </Styless>
             </>
             :
             <>
-                <input placeholder={contents.title} value={contents.patchTitle} onChange={onChange} name='patchTitle'/>
-                <span>작성자:{contents.nickname}</span>
-                <button onClick={()=>toggle(false)}>수정취소</button>
-                <button onClick={reNew}>수정완료</button>
-                <Body>
-                <textarea cols='50' rows='10' placeholder={contents.content} value={contents.patchContent} onChange={onChange} name='patchContent'></textarea>
-                </Body>
+                <Styless>
+                    <header>
+                        <div className="headers">
+                            <input className="title" placeholder={contents.title} value={contents.patchTitle} onChange={onChange} name='patchTitle'/>
+                            <span className="writer">작성자:{contents.nickname}</span>
+                        </div>
+                        <div className="buttons">
+                            <button onClick={()=>toggle(false)}>취소</button>
+                            <button onClick={reNew}>완료</button>
+                        </div>
+                    </header>
+                    <Body>
+                    <textarea cols='50' rows='10' placeholder={contents.content} value={contents.patchContent} onChange={onChange} name='patchContent'></textarea>
+                    </Body>
+                </Styless>
             </>:
             <>
             <Styless>
@@ -101,48 +111,42 @@ const View = ()=>{
             </Styless>
             </>
             }    
-    
-            {/* <>
-                <Title>
-            <input placeholder="제목" value={contents.title} onChange={onChange} name='title'/>
-            <span>작성자:{contents.nickname}</span>
-            {contents.userId===Number(cookies.id)?
-                <>
-                    <button onClick={()=>{onRemove(id)}}>삭제</button>
-                    <button onClick={reNew}>수정</button>
-                    <button onClick={toggle}></button>
-                </>:''}
-            </Title>
-            <Body>
-                <textarea cols='50' rows='10' placeholder="내용" value={contents.content} onChange={onChange} name='content'></textarea>
-            </Body>           
-            </> */}
         
         <Comment y={id}/>
         </>
     )
 }
-// const Title=styled.div`
-//     display:flex;
-//     text-align:center;
-//     input{
-//         width:20%;
-//         border:none;
-//     }
-//     button{
-//         width:20%;
-//     }
-// `
+
 
 const Styless=styled.div`
     header{
         display:flex;
+        justify-content:space-between;
+        .headers{
+            display:flex;
+        }
     }
     .title{
         font-size:20px;
+        width:200px;
     }
     .writer{
         font-size:14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .buttons{
+        button{
+            border:none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color:#fe6229;
+            color: white;
+            width: 50px;
+            height: 30px;
+            margin:0 1px;
+        }
     }
     .body{
         height:40vh;
@@ -155,7 +159,7 @@ const Styless=styled.div`
 const Body=styled.div`
     border:1px solid black;
     padding:10px;
-    height:50vh;
+    height:40vh;
     word-break:break-all;
     word-wrap:break-word;
     textarea{

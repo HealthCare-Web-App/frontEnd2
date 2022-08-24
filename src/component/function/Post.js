@@ -79,7 +79,7 @@ const Table = styled.table`
     }
   }
   tr:nth-child(even) td {
-    background: #eaeaed;
+    background: #dee4f1;
   }
 `;
 
